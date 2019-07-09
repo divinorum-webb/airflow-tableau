@@ -1,8 +1,10 @@
 # VERSION 1.10.3
-# AUTHOR: Matthieu "Puckel_" Roisil
-# DESCRIPTION: Basic Airflow container
+# AUTHOR: Elliott "divinorum_webb" Stam
+# ORIGINAL AUTHOR: Matthieu "Puckel_" Roisil
+# DESCRIPTION: Basic Airflow container with Tableau plugin
 # BUILD: docker build --rm -t puckel/docker-airflow .
-# SOURCE: https://github.com/puckel/docker-airflow
+# SOURCE: https://github.com/divinorum-webb/airflow-tableau
+# ORIGINAL SOURCE: https://github.com/puckel/docker-airflow
 
 FROM python:3.6-slim
 LABEL maintainer="Puckel_"
