@@ -17,7 +17,7 @@ services:
 
     webserver:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow
+        image: divinorum-webb/docker-airflow:latest
         restart: always
         depends_on:
             - postgres
@@ -45,7 +45,7 @@ services:
 
     flower:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow
+        image: divinorum-webb/docker-airflow:latest
         restart: always
         depends_on:
             - redis
@@ -58,7 +58,7 @@ services:
 
     scheduler:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow
+        image: divinorum-webb/docker-airflow:latest
         restart: always
         depends_on:
             - webserver
@@ -78,7 +78,7 @@ services:
 
     worker:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow
+        image: divinorum-webb/docker-airflow:latest
         restart: always
         depends_on:
             - scheduler
