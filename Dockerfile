@@ -2,7 +2,7 @@
 # AUTHOR: Elliott "divinorum_webb" Stam
 # ORIGINAL AUTHOR: Matthieu "Puckel_" Roisil
 # DESCRIPTION: Basic Airflow container with Tableau plugin
-# BUILD: docker build --rm -t puckel/docker-airflow .
+# BUILD: docker build --rm -t divinorum-webb/docker-airflow .
 # SOURCE: https://github.com/divinorum-webb/airflow-tableau
 # ORIGINAL SOURCE: https://github.com/puckel/docker-airflow
 
