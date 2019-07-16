@@ -1,5 +1,10 @@
 version: '2.1'
 services:
+    dags:
+        image: divinorum-webb/docker-airflow
+        restart: always
+        volumes:
+            - ./dags:/usr/local/airflow/dags
     redis:
         image: 'redis:3.2.7'
         # command: redis-server --requirepass redispass
@@ -17,7 +22,7 @@ services:
 
     webserver:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow:latest
+        image: divinorum-webb/docker-airflow
         restart: always
         depends_on:
             - postgres
@@ -30,10 +35,11 @@ services:
             # - POSTGRES_PASSWORD=airflow
             # - POSTGRES_DB=airflow
             # - REDIS_PASSWORD=redispass
-        volumes:
-            - ./dags:/usr/local/airflow/dags
+        volumes_from:
+            - dags
+            # - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
-            - ./plugins:/usr/local/airflow/plugins
+            # - ./plugins:/usr/local/airflow/plugins
         ports:
             - "8080:8080"
         command: webserver
@@ -45,7 +51,7 @@ services:
 
     flower:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow:latest
+        image: divinorum-webb/docker-airflow
         restart: always
         depends_on:
             - redis
@@ -58,14 +64,15 @@ services:
 
     scheduler:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow:latest
+        image: divinorum-webb/docker-airflow
         restart: always
         depends_on:
             - webserver
-        volumes:
-            - ./dags:/usr/local/airflow/dags
+        volumes_from:
+            - dags
+            # - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
-            - ./plugins:/usr/local/airflow/plugins
+            # - ./plugins:/usr/local/airflow/plugins
         environment:
             - LOAD_EX=n
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
@@ -78,14 +85,15 @@ services:
 
     worker:
         # image: puckel/docker-airflow:1.10.3
-        image: divinorum-webb/docker-airflow:latest
+        image: divinorum-webb/docker-airflow
         restart: always
         depends_on:
             - scheduler
-        volumes:
-            - ./dags:/usr/local/airflow/dags
+        volumes_from:
+            - dags
+            # - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
-            - ./plugins:/usr/local/airflow/plugins
+            # - ./plugins:/usr/local/airflow/plugins
         environment:
             - FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
             - EXECUTOR=Celery
