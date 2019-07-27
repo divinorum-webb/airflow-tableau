@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddTagsRequest(BaseRequest):
     """
     Add tags request for generating API requests to Tableau Server.

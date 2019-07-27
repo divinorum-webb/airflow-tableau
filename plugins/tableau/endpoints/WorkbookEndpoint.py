@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class WorkbookEndpoint(BaseEndpoint):
     """
     Workbook endpoint for Tableau Server API requests.

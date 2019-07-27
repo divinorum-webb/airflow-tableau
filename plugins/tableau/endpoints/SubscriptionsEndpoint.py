@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class SubscriptionsEndpoint(BaseEndpoint):
     """
     Subscriptions endpoint for Tableau Server API requests.

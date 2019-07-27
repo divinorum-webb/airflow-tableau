@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddDefaultPermissionsRequest(BaseRequest):
     """
     Add default permissions request for generating API requests to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateUserRequest(BaseRequest):
     """
     Update user request for sending API requests to Tableau Server.

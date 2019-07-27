@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateSiteRequest(BaseRequest):
     """
     Update site request for API requests to Tableau Server.

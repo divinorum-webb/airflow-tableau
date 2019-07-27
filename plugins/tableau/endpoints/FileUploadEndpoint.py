@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class FileUploadEndpoint(BaseEndpoint):
     """
     FileUploadEndpoint endpoint for Tableau Server API requests.

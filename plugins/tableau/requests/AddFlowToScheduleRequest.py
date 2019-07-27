@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddFlowToScheduleRequest(BaseRequest):
     """
     Build the request body for adding a flow to a schedule via API requests to Tableau Server.

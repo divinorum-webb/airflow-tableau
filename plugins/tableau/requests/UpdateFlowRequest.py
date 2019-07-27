@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateFlowRequest(BaseRequest):
     """
     Update flow request for generating API request URLs to Tableau Server.

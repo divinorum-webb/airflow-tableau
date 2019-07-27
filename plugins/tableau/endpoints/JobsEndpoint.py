@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class JobsEndpoint(BaseEndpoint):
     """
     Jobs endpoint for Tableau Server API requests.

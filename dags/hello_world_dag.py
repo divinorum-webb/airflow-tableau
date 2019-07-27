@@ -1,11 +1,14 @@
+from datetime import datetime, timedelta
+import sys
+
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.sensors import ExternalTaskSensor
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.utils.trigger_rule import TriggerRule
-from datetime import datetime, timedelta
-import sys
+
+from tableau import TableauServerConnection
 
 
 default_args = {

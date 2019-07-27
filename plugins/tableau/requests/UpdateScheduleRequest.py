@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateScheduleRequest(BaseRequest):
     """
     Update schedule request for API requests to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class FavoritesEndpoint(BaseEndpoint):
     """
     Favorites endpoint for Tableau Server API requests.

@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class PermissionsEndpoint(BaseEndpoint):
     """
     User endpoint for Tableau Server API requests.

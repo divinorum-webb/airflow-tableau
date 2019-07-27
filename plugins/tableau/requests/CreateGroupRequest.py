@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class CreateGroupRequest(BaseRequest):
     """
     Create group request for generating API request URLs to Tableau Server.

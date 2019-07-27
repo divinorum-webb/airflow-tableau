@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddFlowPermissionsRequest(BaseRequest):
     """
     Add flow permissions request body for issuing API requests to Tableau Server.

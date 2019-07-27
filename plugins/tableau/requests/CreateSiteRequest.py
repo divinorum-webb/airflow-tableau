@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class CreateSiteRequest(BaseRequest):
     """
     Create site request for generating API request URLs to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class SchedulesEndpoint(BaseEndpoint):
     """
     Schedules endpoint for Tableau Server API requests.

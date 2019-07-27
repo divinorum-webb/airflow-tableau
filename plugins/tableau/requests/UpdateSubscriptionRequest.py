@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateSubscriptionRequest(BaseRequest):
     """
     Update subscription request for generating API request URLs to Tableau Server.

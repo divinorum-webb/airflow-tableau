@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class SignInRequest(BaseRequest):
     """
     Sign in request for generating API request URLs to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class DataAlertEndpoint(BaseEndpoint):
     """
     Data Alert endpoint for Tableau Server API requests.

@@ -1,10 +1,14 @@
+from .decorators import *
+from .requests import *
+from .endpoints import *
+
 class TableauServerConnection:
     def __init__(self,
                  config_json,
                  env='tableau_prod'):
         """
         Initialize the TableauServer object.
-        The config_json parameter requires a valid config file.
+        The config_json parameter requires a JSON configuration file.
         The env parameter is a string that indicates which environment to reference from the config file.
         :param config_json:     The configuration object. This should be a dict / JSON object that defines the
                                 Tableau Server configuration.
