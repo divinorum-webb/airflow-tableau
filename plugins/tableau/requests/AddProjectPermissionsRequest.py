@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddProjectPermissionsRequest(BaseRequest):
     """
     Add project permissions request for generating API requests to Tableau Server.

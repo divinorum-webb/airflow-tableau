@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
 FILESIZE_LIMIT = 1024 * 1024 * 60  # 60MB
 

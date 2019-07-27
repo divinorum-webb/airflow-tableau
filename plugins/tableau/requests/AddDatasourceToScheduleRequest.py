@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddDatasourceToScheduleRequest(BaseRequest):
     """
     Add datasource to schedule request for generating API requests to Tableau Server.

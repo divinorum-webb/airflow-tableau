@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class CreateScheduleRequest(BaseRequest):
     """
     Create schedule request for generating API request URLs to Tableau Server.

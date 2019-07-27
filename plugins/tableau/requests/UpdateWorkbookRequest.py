@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateWorkbookRequest(BaseRequest):
     """
     Update workbook request for sending API requests to Tableau Server.

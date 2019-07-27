@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddWorkbookToScheduleRequest(BaseRequest):
     """
     Add workbook to schedule request for generating API request URLs to Tableau Server.

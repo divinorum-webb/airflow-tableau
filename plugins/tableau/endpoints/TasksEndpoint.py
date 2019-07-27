@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class TasksEndpoint(BaseEndpoint):
     """
     Tasks endpoint for Tableau Server API requests.

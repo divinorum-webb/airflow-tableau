@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class ViewEndpoint(BaseEndpoint):
     """
     View endpoint for Tableau Server API requests.

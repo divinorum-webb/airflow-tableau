@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddViewPermissionsRequest(BaseRequest):
     """
     Add view permissions request for generating API requests to Tableau Server.

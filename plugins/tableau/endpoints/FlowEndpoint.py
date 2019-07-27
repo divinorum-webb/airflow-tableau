@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class FlowEndpoint(BaseEndpoint):
     """
     Flow endpoint for Tableau Server API requests.

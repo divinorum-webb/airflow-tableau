@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class GroupEndpoint(BaseEndpoint):
     """
     Group endpoint for Tableau Server API requests.

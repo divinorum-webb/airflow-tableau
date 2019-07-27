@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateDataAlertRequest(BaseRequest):
     """
     Update site request for generating API requests to Tableau Server.

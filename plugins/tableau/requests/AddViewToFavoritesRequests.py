@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddViewToFavoritesRequest(BaseRequest):
     """
     Add view to favorites request for generating API requests to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddDatasourceToFavoritesRequest(BaseRequest):
     """
     Add datasource to favorites request for generating API requests to Tableau Server.

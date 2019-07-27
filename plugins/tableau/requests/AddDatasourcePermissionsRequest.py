@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddDatasourcePermissionsRequest(BaseRequest):
     """
     Add datasource request for generating API requests to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateDatasourceRequest(BaseRequest):
     """
     Update datasource request for generating API request URLs to Tableau Server.

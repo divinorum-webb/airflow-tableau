@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class SiteEndpoint(BaseEndpoint):
     """
     Site endpoint for Tableau Server API requests.

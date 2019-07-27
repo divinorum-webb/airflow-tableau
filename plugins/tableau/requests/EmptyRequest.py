@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class EmptyRequest(BaseRequest):
     """
     Empty request for generating API request URLs to Tableau Server.

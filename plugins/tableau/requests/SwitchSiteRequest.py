@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class SwitchSiteRequest(BaseRequest):
     """
     Switch site request for generating API requests to Tableau Server.

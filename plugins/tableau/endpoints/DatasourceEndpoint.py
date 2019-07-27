@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class DatasourceEndpoint(BaseEndpoint):
     """
     Datasource endpoint for Tableau Server API requests.

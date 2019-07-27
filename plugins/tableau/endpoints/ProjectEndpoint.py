@@ -1,3 +1,6 @@
+from .BaseEndpoint import BaseEndpoint
+
+
 class ProjectEndpoint(BaseEndpoint):
     """
     Projects endpoint for Tableau Server API requests.

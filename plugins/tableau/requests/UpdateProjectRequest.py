@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class UpdateProjectRequest(BaseRequest):
     """
     Update project request for API requests to Tableau Server.

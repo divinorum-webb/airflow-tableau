@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddUserToSiteRequest(BaseRequest):
     """
     Add user to site request for generating API requests to Tableau Server.

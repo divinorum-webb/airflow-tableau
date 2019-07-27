@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddUserToGroupRequest(BaseRequest):
     """
     Add user to group request for generating API requests to Tableau Server.

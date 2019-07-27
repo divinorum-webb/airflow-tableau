@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddWorkbookToFavoritesRequest(BaseRequest):
     """
     Add workbook to favorites request for generating API request URLs to Tableau Server.

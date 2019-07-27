@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddProjectToFavoritesRequest(BaseRequest):
     """
     Add project to favorites request for generating API request URLs to Tableau Server.

@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddWorkbookPermissionsRequest(BaseRequest):
     """
     Add workbook permissions request for generating API request URLs to Tableau Server.

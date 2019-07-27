@@ -1,3 +1,6 @@
+from .BaseRequest import BaseRequest
+
+
 class AddUserToAlertRequest(BaseRequest):
     """
     Add user to alert request for generating API requests to Tableau Server.
