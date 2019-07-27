@@ -66,6 +66,9 @@ RUN set -ex \
     && pip install requests \
     && pip install scipy \
     && pip install scikit-learn \
+    && pip install json \
+    && pip install os \
+    && pip install functools \
     && if [ -n "${PYTHON_DEPS}" ]; then pip install ${PYTHON_DEPS}; fi \
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get autoremove -yqq --purge \

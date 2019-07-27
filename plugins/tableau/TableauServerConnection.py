@@ -1,6 +1,8 @@
-from .decorators import *
-from .requests import *
-from .endpoints import *
+from .decorators.verify_signed_in import verify_signed_in
+from .requests.AddDatasourcePermissionsRequest import AddDatasourcePermissionsRequest
+from .endpoints.AuthEndpoint import AuthEndpoint
+from .endpoints import AuthEndpoint
+
 
 class TableauServerConnection:
     def __init__(self,
