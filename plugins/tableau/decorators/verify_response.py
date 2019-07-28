@@ -1,3 +1,6 @@
+from functools import wraps
+
+
 def verify_response(success_code):
     """
     Verifies that the request being executed has a response whose status code matches the success code provided.
