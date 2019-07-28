@@ -1,7 +1,4 @@
-from .decorators.verify_signed_in import verify_signed_in
-from .requests.AddDatasourcePermissionsRequest import AddDatasourcePermissionsRequest
-from .endpoints.AuthEndpoint import AuthEndpoint
-from .endpoints import AuthEndpoint
+from tableau.decorators.verify_signed_in import verify_signed_in
 
 
 class TableauServerConnection:
