@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import sys
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
@@ -8,7 +7,7 @@ from airflow.operators.sensors import ExternalTaskSensor
 from airflow.operators.dagrun_operator import TriggerDagRunOperator
 from airflow.utils.trigger_rule import TriggerRule
 
-from tableau import TableauServerConnection
+from tableau.TableauServerConnection import TableauServerConnection
 
 
 default_args = {
@@ -44,7 +43,7 @@ with DAG(
 
     end_hello_world = BashOperator(
         task_id='end_hello_world',
-        bash_command="echo 'ENDING HELLOW WORLD SAMPLE'"
+        bash_command="echo 'ENDING HELLO WORLD SAMPLE'"
     )
 
     # trigger_next = TriggerDagRunOperator(
