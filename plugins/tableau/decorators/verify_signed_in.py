@@ -1,3 +1,6 @@
+from functools import wraps
+
+
 def verify_signed_in(func):
     """
     Verifies that the Tableau Server object is signed in.

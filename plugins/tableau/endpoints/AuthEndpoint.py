@@ -1,4 +1,4 @@
-from .BaseEndpoint import BaseEndpoint
+from tableau.endpoints.BaseEndpoint import BaseEndpoint
 
 
 class AuthEndpoint(BaseEndpoint):

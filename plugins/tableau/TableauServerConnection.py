@@ -1,6 +1,64 @@
-from .decorators import *
-from .requests import *
-from .endpoints import *
+import requests
+
+from tableau.decorators.verify_signed_in import *
+from tableau.endpoints.AuthEndpoint import *
+from tableau.endpoints.DataAlertEndpoint import *
+from tableau.endpoints.DatasourceEndpoint import *
+from tableau.endpoints.FavoritesEndpoint import *
+from tableau.endpoints.FileUploadEndpoint import *
+from tableau.endpoints.FlowEndpoint import *
+from tableau.endpoints.GroupEndpoint import *
+from tableau.endpoints.JobsEndpoint import *
+from tableau.endpoints.PermissionsEndpoint import *
+from tableau.endpoints.ProjectEndpoint import *
+from tableau.endpoints.SchedulesEndpoint import *
+from tableau.endpoints.SiteEndpoint import *
+from tableau.endpoints.SubscriptionsEndpoint import *
+from tableau.endpoints.TasksEndpoint import *
+from tableau.endpoints.UserEndpoint import *
+from tableau.endpoints.WorkbookEndpoint import *
+from tableau.requests.AddDatasourcePermissionsRequest import *
+from tableau.requests.AddDatasourceToFavoritesRequest import *
+from tableau.requests.AddDatasourceToScheduleRequest import *
+from tableau.requests.AddDefaultPermissionsRequest import *
+from tableau.requests.AddFlowPermissionsRequest import *
+from tableau.requests.AddProjectPermissionsRequest import *
+from tableau.requests.AddProjectToFavoritesRequest import *
+from tableau.requests.AddTagsRequest import *
+from tableau.requests.AddUserToAlertRequest import *
+from tableau.requests.AddUserToGroupRequest import *
+from tableau.requests.AddUserToSiteRequest import *
+from tableau.requests.AddViewToFavoritesRequest import *
+from tableau.requests.AddWorkbookPermissionsRequest import *
+from tableau.requests.AddWorkbookToFavoritesRequest import *
+from tableau.requests.AddWorkbookToScheduleRequest import *
+from tableau.requests.CreateGroupRequest import *
+from tableau.requests.CreateProjectRequest import *
+from tableau.requests.CreateScheduleRequest import *
+from tableau.requests.CreateSiteRequest import *
+from tableau.requests.CreateSubscriptionRequest import *
+from tableau.requests.EmptyRequest import *
+from tableau.requests.PublishDatasourceRequest import *
+from tableau.requests.PublishFlowRequest import *
+from tableau.requests.PublishWorkbookRequest import *
+from tableau.requests.SignInRequest import *
+from tableau.requests.SwitchSiteRequest import *
+from tableau.requests.UpdateDataAlertRequest import *
+from tableau.requests.UpdateDatasourceConnectionRequest import *
+from tableau.requests.UpdateDatasourceRequest import *
+from tableau.requests.UpdateFlowConnectionRequest import *
+from tableau.requests.UpdateFlowRequest import *
+from tableau.requests.UpdateGroupRequest import *
+from tableau.requests.UpdateProjectRequest import *
+from tableau.requests.UpdateScheduleRequest import *
+from tableau.requests.UpdateSiteRequest import *
+from tableau.requests.UpdateSubscriptionRequest import *
+from tableau.requests.UpdateUserRequest import *
+from tableau.requests.UpdateWorkbookConnectionRequest import *
+from tableau.requests.UpdateUserRequest import *
+from tableau.requests.UpdateWorkbookNowRequest import *
+from tableau.requests.UpdateWorkbookRequest import *
+
 
 class TableauServerConnection:
     def __init__(self,

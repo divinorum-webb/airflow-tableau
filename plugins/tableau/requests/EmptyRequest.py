@@ -1,4 +1,4 @@
-from .BaseRequest import BaseRequest
+from tableau.requests.BaseRequest import BaseRequest
 
 
 class EmptyRequest(BaseRequest):

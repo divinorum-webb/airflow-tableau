@@ -1,4 +1,4 @@
-from .BaseRequest import BaseRequest
+from tableau.requests.BaseRequest import BaseRequest
 
 
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
