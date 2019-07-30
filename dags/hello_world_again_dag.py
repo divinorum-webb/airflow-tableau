@@ -18,13 +18,13 @@ default_args = {
 }
 
 
-def initialize_tableau_conn():
+def query_user(**kwargs):
+    user_id = kwargs['user_id']
     conn = TableauServerConnection(config_json=tableau_server_config)
     conn.sign_in()
-    users_json = conn.get_users_on_site().json()
-    print(users_json)
-    groups_json = conn.query_groups().json()
-    print(groups_json)
+    results = conn.query_user_on_site(user_id)
+    print(results.json())
+    conn.sign_out()
 
 
 with DAG(
@@ -49,7 +49,8 @@ with DAG(
 
     initialize_tableau_conn = PythonOperator(
         task_id='initialize_tableau_conn',
-        python_callable=initialize_tableau_conn
+        python_callable=query_user,
+        op_kwargs={'user_id': '1a853d3e-8d87-4cfc-8999-455a903595f2'}
     )
 
     print_hello_world = BashOperator(
