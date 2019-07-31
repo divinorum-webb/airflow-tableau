@@ -1,5 +1,5 @@
-from tableau.TableauServerConnection import TableauServerConnection
-from tableau.config.config import tableau_server_config
+from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.config.config import tableau_server_config
 
 
 def main():
@@ -19,3 +19,7 @@ def query_user(**kwargs):
     user_data = conn.query_user_on_site(user_id)
     print(user_data.json())
     conn.sign_out()
+
+
+if __name__ == '__main__':
+    main()

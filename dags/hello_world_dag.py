@@ -1,13 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
-from airflow.operators.sensors import ExternalTaskSensor
-from airflow.operators.dagrun_operator import TriggerDagRunOperator
-from airflow.utils.trigger_rule import TriggerRule
 
-from tableau.TableauServerConnection import TableauServerConnection
+from tableau.client.TableauServerConnection import TableauServerConnection
 
 
 default_args = {
@@ -15,6 +12,12 @@ default_args = {
     'depends_on_past': False,
     'start_date': datetime(2019, 1, 1)
 }
+
+
+def initialize_tableau_conn():
+    conn = TableauServerConnection()
+    print(conn)
+
 
 with DAG(
     'hello_world',
@@ -36,6 +39,11 @@ with DAG(
         bash_command="echo 'STARTING HELLO WORLD SAMPLE'"
     )
 
+    initialize_tableau_conn = PythonOperator(
+        task_id='initialize_tableau_conn',
+        python_callable=initialize_tableau_conn()
+    )
+
     print_hello_world = BashOperator(
         task_id='print_hello_world',
         bash_command="echo 'Hello there, you little world, you'"
@@ -48,9 +56,4 @@ with DAG(
 
     # trigger_next = TriggerDagRunOperator(
     #     task_id='start_scorecard_subscriptions',
-    #     trigger_dag_id='tableau_subscription_example'
-    # )
-
-    # wait_first_job >> start_hello_world >> print_hello_world >> end_hello_world
-    # start_hello_world >> print_hello_world >> end_hello_world >> trigger_next
-    start_hello_world >> print_hello_world >> end_hello_world
+    #     trigger_dag_id='tableau_subscription_exam
