@@ -1,5 +1,5 @@
-from tableau.TableauServerConnection import TableauServerConnection
-from tableau.config.config import tableau_server_config
+from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.config.config import tableau_server_config
 
 
 def main():
