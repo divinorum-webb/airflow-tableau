@@ -19,3 +19,7 @@ def query_user(**kwargs):
     user_data = conn.query_user_on_site(user_id)
     print(user_data.json())
     conn.sign_out()
+
+
+if __name__ == '__main__':
+    main()
