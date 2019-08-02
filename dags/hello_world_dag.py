@@ -5,6 +5,7 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
 from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.config.config import tableau_server_config
 
 
 default_args = {
@@ -15,7 +16,7 @@ default_args = {
 
 
 def initialize_tableau_conn():
-    conn = TableauServerConnection()
+    conn = TableauServerConnection(config_json=tableau_server_config)
     print(conn)
 
 
@@ -41,7 +42,7 @@ with DAG(
 
     initialize_tableau_conn = PythonOperator(
         task_id='initialize_tableau_conn',
-        python_callable=initialize_tableau_conn()
+        python_callable=initialize_tableau_conn
     )
 
     print_hello_world = BashOperator(
