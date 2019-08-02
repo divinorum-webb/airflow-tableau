@@ -8,7 +8,7 @@ from airflow.operators.python_operator import PythonOperator
 # from airflow.utils.trigger_rule import TriggerRule
 
 from tableau.client.TableauServerConnection import TableauServerConnection
-from tableau.config.config import tableau_server_config
+from tableau.client.config.config import tableau_server_config
 
 
 default_args = {

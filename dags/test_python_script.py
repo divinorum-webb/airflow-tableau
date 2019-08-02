@@ -5,9 +5,9 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from tableau.scripts.test_get_users import main
-from tableau.scripts.test_get_users import query_user
-
+# from tableau.scripts.test_get_users import main
+# from tableau.scripts.test_get_users import query_user
+from tableau.scripts.sample_save_users import main
 
 default_args = {
     'owner': 'airflow',
@@ -39,10 +39,15 @@ with DAG(
         python_callable=print_cwd
     )
 
+    # run_python_script = PythonOperator(
+    #     task_id='run_python_script',
+    #     python_callable=query_user,
+    #     op_kwargs={'user_id': '1a853d3e-8d87-4cfc-8999-455a903595f2'}
+    # )
+
     run_python_script = PythonOperator(
         task_id='run_python_script',
-        python_callable=query_user,
-        op_kwargs={'user_id': '1a853d3e-8d87-4cfc-8999-455a903595f2'}
+        python_callable=main
     )
 
     end_script_example = BashOperator(
