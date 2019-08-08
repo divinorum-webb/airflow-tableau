@@ -211,10 +211,27 @@ class TableauServerConnection:
 
     # sites
 
-    def create_site(self):
+    def create_site(self, site_name, content_url, admin_mode='ContentAndUsers', user_quota=None, storage_quota=None,
+                    disable_subscriptions=False, flows_enabled_flag=None, guest_access_enabled_flag=False,
+                    cache_warmup_enabled_flag=False, commenting_enabled_flag=False, revision_history_enabled_flag=False,
+                    revision_limit=None, subscribe_others_enabled_flag=False):
         # This method can only be called by server administrators.
-        print("This method can only be called by server administrators.")
-        pass
+        self.active_request = CreateSiteRequest(ts_connection=self,
+                                                site_name=site_name, content_url=content_url, admin_mode=admin_mode,
+                                                user_quota=user_quota, storage_quota=storage_quota,
+                                                disable_subscriptions=disable_subscriptions,
+                                                flows_enabled_flag=flows_enabled_flag,
+                                                guest_access_enabled_flag=guest_access_enabled_flag,
+                                                cache_warmup_enabled_flag=cache_warmup_enabled_flag,
+                                                commenting_enabled_flag=commenting_enabled_flag,
+                                                revision_history_enabled=revision_history_enabled_flag,
+                                                revision_limit=revision_limit,
+                                                subscribe_others_enabled_flag=subscribe_others_enabled_flag)\
+                                                .get_request()
+        self.active_endpoint = SiteEndpoint(ts_connection=self, create_site=True).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.post(url=self.active_endpoint, json=self.active_request, headers=self.active_headers)
+        return response
 
     def query_site(self, parameter_dict=None):
         self.active_endpoint = SiteEndpoint(ts_connection=self,
