@@ -81,6 +81,7 @@ class TableauServerConnection:
         self._env = env
         self.__auth_token = None
         self.__site_id = None
+        self.__site_url = None
         self.__user_id = None
         self.active_endpoint = None
         self.active_request = None
@@ -105,10 +106,6 @@ class TableauServerConnection:
     @property
     def site_name(self):
         return self._config[self._env]['site_name']
-
-    @property
-    def site_url(self):
-        return self._config[self._env]['site_url']
 
     @property
     def sign_in_headers(self):
@@ -152,6 +149,18 @@ class TableauServerConnection:
             raise Exception('This Tableau Server connection is already connected the specified site.')
 
     @property
+    def site_url(self):
+        return self._config[self._env]['site_url']
+
+    @site_url.setter
+    def site_url(self, content_url):
+        if self.site_url != content_url:
+            self.__site_url = content_url
+        else:
+            raise Exception('The current Tableau Server site already uses this content URL ({}).'
+                            .format(content_url))
+
+    @property
     def user_id(self):
         return self.__user_id
 
@@ -182,14 +191,15 @@ class TableauServerConnection:
         return response
 
     @verify_signed_in
-    def switch_site(self, site_name):
-        self.active_request = SwitchSiteRequest(ts_connection=self, site_name=site_name).get_request()
+    def switch_site(self, content_url):
+        self.active_request = SwitchSiteRequest(ts_connection=self, site_name=content_url).get_request()
         self.active_endpoint = AuthEndpoint(ts_connection=self, switch_site=True).get_endpoint()
         self.active_headers = self.default_headers
         response = requests.post(url=self.active_endpoint, json=self.active_request, headers=self.active_headers)
         if response.status_code == 200:
             self.auth_token = response.json()['credentials']['token']
             self.site_id = response.json()['credentials']['site']['id']
+            self.site_url = response.json()['credentials']['site']['contentUrl']
             self.user_id = response.json()['credentials']['user']['id']
         return response
 
