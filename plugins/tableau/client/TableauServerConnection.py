@@ -258,15 +258,35 @@ class TableauServerConnection:
         response = requests.get(url=self.active_endpoint, headers=self.active_headers)
         return response
 
-    def update_site(self):
+    def update_site(self, site_id, site_name=None, content_url=None, admin_mode=None, user_quota=None,
+                    state=None, storage_quota=None, disable_subscriptions=False, flows_enabled_flag=None,
+                    guest_access_enabled_flag=False, cache_warmup_enabled_flag=False, commenting_enabled_flag=False,
+                    revision_history_enabled_flag=False, revision_limit=None, subscribe_others_enabled_flag=False):
         # This method can only be called by server administrators.
-        print("This method can only be called by server administrators.")
-        pass
+        self.active_request = UpdateSiteRequest(ts_connection=self,
+                                                site_name=site_name, content_url=content_url, admin_mode=admin_mode,
+                                                user_quota=user_quota, state=state, storage_quota=storage_quota,
+                                                disable_subscriptions=disable_subscriptions,
+                                                flows_enabled_flag=flows_enabled_flag,
+                                                guest_access_enabled_flag=guest_access_enabled_flag,
+                                                cache_warmup_enabled_flag=cache_warmup_enabled_flag,
+                                                commenting_enabled_flag=commenting_enabled_flag,
+                                                revision_history_enabled=revision_history_enabled_flag,
+                                                revision_limit=revision_limit,
+                                                subscribe_others_enabled_flag=subscribe_others_enabled_flag) \
+                                                .get_request()
+        self.active_endpoint = SiteEndpoint(ts_connection=self, site_id=site_id, update_site=True).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.put(url=self.active_endpoint, json=self.active_request, headers=self.active_headers)
+        return response
 
-    def delete_site(self):
+    def delete_site(self, site_id=None, site_name=None, content_url=None):
         # This method can only be called by server administrators.
-        print("This method can only be called by server administrators.")
-        pass
+        self.active_endpoint = SiteEndpoint(ts_connection=self, delete_site=True, site_id=site_id, site_name=site_name,
+                                            content_url=content_url).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
+        return response
 
     def delete_data_driven_alert(self, data_alert_id):
         self.active_endpoint = DataAlertEndpoint(ts_connection=self,
