@@ -9,6 +9,8 @@ class CreateSiteRequest(BaseRequest):
     :type ts_connection:                    class
     :param site_name:                       The name for the site being created.
     :type site_name:                        string
+    :param content_url:                     The content url for the site (typically is the same as site name).
+    :type content_url:                      string
     :param admin_mode:                      Set this to 'ContentAndUsers' to allow site administrators to use the
                                             server interface and tabcmd commands to add and remove users.
                                             Set this to 'ContentOnly' to prevent site administrators from adding or
@@ -40,6 +42,7 @@ class CreateSiteRequest(BaseRequest):
     def __init__(self,
                  ts_connection,
                  site_name,
+                 content_url,
                  admin_mode='ContentAndUsers',
                  user_quota=None,
                  storage_quota=None,
@@ -54,6 +57,7 @@ class CreateSiteRequest(BaseRequest):
 
         super().__init__(ts_connection)
         self._site_name = site_name
+        self._content_url = content_url
         self._admin_mode = admin_mode
         self._user_quota = user_quota
         self._storage_quota = storage_quota
@@ -100,7 +104,7 @@ class CreateSiteRequest(BaseRequest):
         self._request_body.update({
             'site': {
                 'name': self._site_name,
-                'contentUrl': self._connection.site_url,
+                'contentUrl': self._content_url,
                 'adminMode': self._admin_mode
             }
         })
