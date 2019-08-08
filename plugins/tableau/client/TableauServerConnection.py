@@ -169,6 +169,7 @@ class TableauServerConnection:
             self.auth_token = response.json()['credentials']['token']
             self.site_id = response.json()['credentials']['site']['id']
             self.user_id = response.json()['credentials']['user']['id']
+        return response
 
     @verify_signed_in
     def sign_out(self):
