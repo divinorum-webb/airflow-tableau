@@ -9,6 +9,10 @@ class SiteEndpoint(BaseEndpoint):
     :type ts_connection:        class
     :param site_id:             The site ID.
     :type site_id:              string
+    :param site_name:           The site name (only required if deleting a site by name).
+    :type site_name:            string
+    :param content_url:         The site name (only required if deleting a site by contentUrl).
+    :type content_url:          string
     :param create_site:         Boolean flag; True if creating a site, False otherwise.
     :type create_site:          boolean
     :param update_site:         Boolean flag; True if updating a specific site, False otherwise.
@@ -42,6 +46,8 @@ class SiteEndpoint(BaseEndpoint):
     def __init__(self, 
                  ts_connection, 
                  site_id=None,
+                 site_name=None,
+                 content_url=None,
                  create_site=False,
                  update_site=False,
                  delete_site=False,
@@ -60,6 +66,8 @@ class SiteEndpoint(BaseEndpoint):
         
         super().__init__(ts_connection)
         self._site_id = site_id
+        self._site_name = site_name
+        self._content_url = content_url
         self._create_site = create_site
         self._update_site = update_site
         self._delete_site = delete_site
@@ -107,12 +115,22 @@ class SiteEndpoint(BaseEndpoint):
     def base_site_group_id_url(self):
         return "{0}/{1}".format(self.base_site_group_url,
                                 self._group_id)
+
+    @property
+    def base_delete_site_url(self):
+        if self._site_id:
+            return "{0}/{1}".format(self.base_site_url,
+                                    self._site_id)
+        elif self._site_name:
+            return "{0}/{1}?key=name".format(self.base_site_url,
+                                             self._site_name)
+        elif self._content_url:
+            return "{0}/{1}?key=contentUrl".format(self.base_site_url,
+                                                   self._content_url)
     
     def get_endpoint(self):
-        if self._site_id or self._user_id or self._group_id:
-            if self._update_site and not self._delete_site:
-                url = self.base_site_id_url
-            elif self._delete_site and not self._update_site:
+        if not self._delete_site and (self._site_id or self._user_id or self._group_id):
+            if self._update_site:
                 url = self.base_site_id_url
             elif self._get_users and not self._add_user:
                 url = self.base_site_user_url
@@ -132,6 +150,8 @@ class SiteEndpoint(BaseEndpoint):
                 url = self.base_site_views_url
             else:
                 self._invalid_parameter_exception()
+        elif self._delete_site and (self._site_id or self._site_name or self._content_url):
+            url = self.base_delete_site_url
         else:
             url = self.base_site_url
 
