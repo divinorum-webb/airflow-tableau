@@ -43,6 +43,13 @@ def update_site_name(conn, new_content_url):
     return conn, response
 
 
+def update_site_user_quota(conn, new_user_quota):
+    site_json = conn.query_site().json()
+    site_id = site_json['site']['id']
+    response = conn.update_site(site_id=site_id, user_quota=new_user_quota)
+    return conn, response
+
+
 def delete_site(conn):
     site_json = conn.query_site().json()
     site_id = site_json['site']['id']
@@ -78,7 +85,7 @@ def test_query_views_for_site():
     conn.sign_out()
 
 
-def test_update_site():
+def test_update_site_name():
     conn = sign_in()
     conn.switch_site(TEST_SITE_CONTENT_URL)
     conn, update_site_response = update_site_name(conn, UPDATED_CONTENT_URL)
@@ -86,9 +93,18 @@ def test_update_site():
     conn.sign_out()
 
 
+def test_update_site_user_quota():
+    conn = sign_in()
+    conn.switch_site(UPDATED_CONTENT_URL)
+    conn, update_site_response = update_site_user_quota(conn, '15')
+    assert update_site_response.status_code == 200
+    conn.sign_out()
+
+
 def test_delete_site():
     conn = sign_in()
     conn.switch_site(UPDATED_CONTENT_URL)
-    conn, delete_site_response = delete_site(conn)
-    assert delete_site_response.status_code == 204
+    if conn.query_site().json()['site']['name'] != 'estam':
+        conn, delete_site_response = delete_site(conn)
+        assert delete_site_response.status_code == 204
     conn.sign_out()
