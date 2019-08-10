@@ -286,6 +286,8 @@ class TableauServerConnection:
         response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
         return response
 
+    # data driven alerts
+
     def delete_data_driven_alert(self, data_alert_id):
         self.active_endpoint = DataAlertEndpoint(ts_connection=self,
                                                  data_alert_id=data_alert_id).get_endpoint()
@@ -325,10 +327,12 @@ class TableauServerConnection:
         response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
         return response
 
-    def update_data_driven_alert(self, data_alert_id, subject=None, frequency=None, alert_owner_id=None,
-                                 is_public_flag=None):
-        self.active_request = UpdateDataAlertRequest(ts_connection=self, subject=subject, frequency=frequency,
-                                                     alert_owner_id=alert_owner_id,
+    def update_data_driven_alert(self, data_alert_id, data_alert_subject=None, data_alert_frequency=None,
+                                 data_alert_owner_id=None, is_public_flag=None):
+        self.active_request = UpdateDataAlertRequest(ts_connection=self,
+                                                     data_alert_subject=data_alert_subject,
+                                                     data_alert_frequency=data_alert_frequency,
+                                                     data_alert_owner_id=data_alert_owner_id,
                                                      is_public_flag=is_public_flag).get_request()
         self.active_endpoint = DataAlertEndpoint(ts_connection=self, data_alert_id=data_alert_id).get_endpoint()
         self.active_headers = self.default_headers
@@ -674,7 +678,10 @@ class TableauServerConnection:
 
     def update_data_source(self, datasource_id, new_project_id=None, new_owner_id=None, is_certified_flag=None,
                            certification_note=None):
-        """Note that assigning an embedded extract will remain in the same project as its workbook, even if the response indicates it has moved"""
+        """
+        Note that assigning an embedded extract will remain in the same project as its workbook,
+        even if the response indicates it has moved
+        """
         self.active_request = UpdateDatasourceRequest(ts_connection=self, new_project_id=new_project_id,
                                                       new_owner_id=new_owner_id,
                                                       is_certified_flag=is_certified_flag,
