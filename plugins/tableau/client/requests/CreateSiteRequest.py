@@ -21,8 +21,8 @@ class CreateSiteRequest(BaseRequest):
     :type user_quota:                       string
     :param storage_quota:                   The maximum amount of space for storage.
     :type storage_quota:                    string
-    :param disable_subscriptions:           Boolean flag; True if disabling subscriptions, False otherwise.
-    :type disable_subscriptions:            boolean
+    :param disable_subscriptions_flag:      Boolean flag; True if disabling subscriptions, False otherwise.
+    :type disable_subscriptions_flag:       boolean
     :param flows_enabled_flag:              Boolean flag; True if flows are enabled, False otherwise.
     :type flows_enabled_flag:               boolean
     :param guest_access_enabled_flag:       Boolean flag; True if guest access is enabled, False otherwise.
@@ -46,7 +46,7 @@ class CreateSiteRequest(BaseRequest):
                  admin_mode='ContentAndUsers',
                  user_quota=None,
                  storage_quota=None,
-                 disable_subscriptions=False,
+                 disable_subscriptions_flag=False,
                  flows_enabled_flag=None,
                  guest_access_enabled_flag=False,
                  cache_warmup_enabled_flag=False,
@@ -61,7 +61,7 @@ class CreateSiteRequest(BaseRequest):
         self._admin_mode = admin_mode
         self._user_quota = user_quota
         self._storage_quota = storage_quota
-        self._disable_subscriptions = disable_subscriptions
+        self._disable_subscriptions_flag = disable_subscriptions_flag
         self._flows_enabled_flag = flows_enabled_flag
         self._guest_access_enabled_flag = guest_access_enabled_flag
         self._cache_warmup_enabled_flag = cache_warmup_enabled_flag
@@ -88,14 +88,14 @@ class CreateSiteRequest(BaseRequest):
     @property
     def optional_param_values(self):
         return [
-            self._storage_quota,
-            'true' if self._disable_subscriptions else None,
+            str(self._storage_quota) if self._storage_quota else None,
+            'true' if self._disable_subscriptions_flag else None,
             'true' if self._flows_enabled_flag else None,
             'true' if self._guest_access_enabled_flag else None,
             'true' if self._cache_warmup_enabled_flag else None,
             'true' if self._commenting_enabled_flag else None,
             'true' if self._revision_history_enabled else None,
-            self._revision_limit,
+            str(self._revision_limit) if self._revision_limit else None,
             'true' if self._subscribe_others_enabled_flag else None
         ]
 
@@ -113,7 +113,7 @@ class CreateSiteRequest(BaseRequest):
     @property
     def modified_create_site_request(self):
         if self._user_quota and self._admin_mode != 'ContentOnly':
-            self._request_body['site'].update({'userQuota': self._user_quota})
+            self._request_body['site'].update({'userQuota': str(self._user_quota)})
         elif self._user_quota:
             self._invalid_parameter_exception()
 

@@ -47,7 +47,3 @@ def test_switch_site():
     conn.sign_out()
     assert switch_site_response.status_code == 200
     assert original_content_url != new_active_site['site']['contentUrl']
-
-
-test_basic_auth()
-test_switch_site()
