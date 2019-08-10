@@ -116,7 +116,7 @@ class UpdateSiteRequest(BaseRequest):
             self._content_url,
             self._admin_mode,
             self._state,
-            self._storage_quota,
+            str(self._storage_quota) if self._storage_quota else None,
             'true' if self._disable_subscriptions is True
             else 'false' if self._disable_subscriptions is False else None,
             'true' if self._flows_enabled_flag is True
@@ -129,7 +129,7 @@ class UpdateSiteRequest(BaseRequest):
             else 'false' if self._commenting_enabled_flag is False else None,
             'true' if self._revision_history_enabled is True
             else 'false' if self._revision_history_enabled is False else None,
-            self._revision_limit,
+            str(self._revision_limit) if self._revision_limit else None,
             'true' if self._subscribe_others_enabled_flag is True
             else 'false' if self._subscribe_others_enabled_flag is False else None
         ]
@@ -137,7 +137,7 @@ class UpdateSiteRequest(BaseRequest):
     @property
     def base_update_site_request(self):
         if self._user_quota and self._admin_mode != 'ContentOnly':
-            self._request_body.update({'userQuota': self._user_quota})
+            self._request_body['site'].update({'userQuota': str(self._user_quota)})
         elif self._user_quota:
             self._invalid_parameter_exception()
 
