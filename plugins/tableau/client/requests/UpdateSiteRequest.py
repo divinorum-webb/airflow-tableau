@@ -35,9 +35,9 @@ class UpdateSiteRequest(BaseRequest):
                                             If you set a quota and the site exceeds it, publishers will be prevented
                                             from uploading new content until the site is under the limit again.
     :type storage_quota:                    string
-    :param disable_subscriptions:           Boolean flag; True if users can subscribe to workbooks or views on the
+    :param disable_subscriptions_flag:      Boolean flag; True if users can subscribe to workbooks or views on the
                                             site, False otherwise.
-    :type disable_subscriptions:            boolean
+    :type disable_subscriptions_flag:       boolean
     :param flows_enabled_flag:              Boolean flag; True if flows are enabled on the site, False otherwise.
     :type flows_enabled_flag:               boolean
     :param guest_access_enabled_flag:       Boolean flag; True if guest access is enabled on the site, False otherwise.
@@ -64,7 +64,7 @@ class UpdateSiteRequest(BaseRequest):
                  user_quota=None,
                  state='Active',
                  storage_quota=None,
-                 disable_subscriptions=None,
+                 disable_subscriptions_flag=None,
                  flows_enabled_flag=None,
                  guest_access_enabled_flag=False,
                  cache_warmup_enabled_flag=False,
@@ -81,7 +81,7 @@ class UpdateSiteRequest(BaseRequest):
         self._user_quota = user_quota
         self._state = state
         self._storage_quota = storage_quota
-        self._disable_subscriptions = disable_subscriptions
+        self._disable_subscriptions_flag = disable_subscriptions_flag
         self._flows_enabled_flag = flows_enabled_flag
         self._guest_access_enabled_flag = guest_access_enabled_flag
         self._cache_warmup_enabled_flag = cache_warmup_enabled_flag
@@ -117,8 +117,8 @@ class UpdateSiteRequest(BaseRequest):
             self._admin_mode,
             self._state,
             str(self._storage_quota) if self._storage_quota else None,
-            'true' if self._disable_subscriptions is True
-            else 'false' if self._disable_subscriptions is False else None,
+            'true' if self._disable_subscriptions_flag is True
+            else 'false' if self._disable_subscriptions_flag is False else None,
             'true' if self._flows_enabled_flag is True
             else 'false' if self._flows_enabled_flag is False else None,
             'true' if self._guest_access_enabled_flag is True

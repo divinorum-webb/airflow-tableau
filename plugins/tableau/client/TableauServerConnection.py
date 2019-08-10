@@ -212,14 +212,14 @@ class TableauServerConnection:
     # sites
 
     def create_site(self, site_name, content_url, admin_mode='ContentAndUsers', user_quota=None, storage_quota=None,
-                    disable_subscriptions=False, flows_enabled_flag=None, guest_access_enabled_flag=False,
+                    disable_subscriptions_flag=False, flows_enabled_flag=None, guest_access_enabled_flag=False,
                     cache_warmup_enabled_flag=False, commenting_enabled_flag=False, revision_history_enabled_flag=False,
                     revision_limit=None, subscribe_others_enabled_flag=False):
         # This method can only be called by server administrators.
         self.active_request = CreateSiteRequest(ts_connection=self,
                                                 site_name=site_name, content_url=content_url, admin_mode=admin_mode,
                                                 user_quota=user_quota, storage_quota=storage_quota,
-                                                disable_subscriptions=disable_subscriptions,
+                                                disable_subscriptions_flag=disable_subscriptions_flag,
                                                 flows_enabled_flag=flows_enabled_flag,
                                                 guest_access_enabled_flag=guest_access_enabled_flag,
                                                 cache_warmup_enabled_flag=cache_warmup_enabled_flag,
@@ -259,14 +259,14 @@ class TableauServerConnection:
         return response
 
     def update_site(self, site_id, site_name=None, content_url=None, admin_mode=None, user_quota=None,
-                    state=None, storage_quota=None, disable_subscriptions=False, flows_enabled_flag=None,
+                    state=None, storage_quota=None, disable_subscriptions_flag=False, flows_enabled_flag=None,
                     guest_access_enabled_flag=False, cache_warmup_enabled_flag=False, commenting_enabled_flag=False,
                     revision_history_enabled_flag=False, revision_limit=None, subscribe_others_enabled_flag=False):
         # This method can only be called by server administrators.
         self.active_request = UpdateSiteRequest(ts_connection=self,
                                                 site_name=site_name, content_url=content_url, admin_mode=admin_mode,
                                                 user_quota=user_quota, state=state, storage_quota=storage_quota,
-                                                disable_subscriptions=disable_subscriptions,
+                                                disable_subscriptions_flag=disable_subscriptions_flag,
                                                 flows_enabled_flag=flows_enabled_flag,
                                                 guest_access_enabled_flag=guest_access_enabled_flag,
                                                 cache_warmup_enabled_flag=cache_warmup_enabled_flag,
