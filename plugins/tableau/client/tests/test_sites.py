@@ -1,6 +1,10 @@
 from tableau.client.TableauServerConnection import TableauServerConnection
 from tableau.client.config.config import tableau_server_config
 
+TEST_SITE_NAME = 'estam_api_test'
+TEST_SITE_CONTENT_URL = 'estam_api_test'
+UPDATED_CONTENT_URL = 'estam_api_test_renamed'
+
 
 def sign_in():
     conn = TableauServerConnection(tableau_server_config)
@@ -14,11 +18,6 @@ def sign_out(conn):
 
 def create_site(conn, site_name, site_content_url):
     response = conn.create_site(site_name, site_content_url)
-    return conn, response
-
-
-def switch_site(conn, new_site_name):
-    response = conn.switch_site(new_site_name)
     return conn, response
 
 
@@ -51,31 +50,45 @@ def delete_site(conn):
     return conn, response
 
 
-def test_site_methods():
+def test_create_site():
     conn = sign_in()
-
-    conn, create_site_response = create_site(conn, 'estam_api_test', 'estam_api_test')
+    conn, create_site_response = create_site(conn, TEST_SITE_NAME, TEST_SITE_NAME)
     assert create_site_response.status_code == 201
+    conn.sign_out()
 
-    conn, switch_site_response = switch_site(conn, 'estam_api_test')
-    assert switch_site_response.status_code == 200
 
+def test_query_site():
+    conn = sign_in()
     conn, query_site_response = query_site(conn)
     assert query_site_response.status_code == 200
+    conn.sign_out()
 
+
+def test_query_sites():
+    conn = sign_in()
     conn, query_sites_response = query_sites(conn)
     assert query_sites_response.status_code == 200
+    conn.sign_out()
 
+
+def test_query_views_for_site():
+    conn = sign_in()
     conn, query_views_for_site_response = query_views_for_site(conn)
     assert query_views_for_site_response.status_code == 200
+    conn.sign_out()
 
-    conn, update_site_response = update_site_name(conn, 'estam_api_test_renamed')
+
+def test_update_site():
+    conn = sign_in()
+    conn.switch_site(TEST_SITE_CONTENT_URL)
+    conn, update_site_response = update_site_name(conn, UPDATED_CONTENT_URL)
     assert update_site_response.status_code == 200
+    conn.sign_out()
 
+
+def test_delete_site():
+    conn = sign_in()
+    conn.switch_site(UPDATED_CONTENT_URL)
     conn, delete_site_response = delete_site(conn)
     assert delete_site_response.status_code == 204
-
-    sign_out(conn)
-
-
-test_site_methods()
+    conn.sign_out()

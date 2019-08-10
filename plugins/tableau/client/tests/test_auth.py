@@ -40,14 +40,10 @@ def test_basic_auth():
     assert sign_out_response.status_code == 204
 
 
-def test_switch_site_method():
+def test_switch_site():
     conn, original_content_url = get_original_content_url()
     conn, new_content_url = get_replacement_content_url(conn, original_content_url)
     conn, new_active_site, switch_site_response = switch_site(conn, new_content_url)
     conn.sign_out()
     assert switch_site_response.status_code == 200
     assert original_content_url != new_active_site['site']['contentUrl']
-
-
-test_basic_auth()
-test_switch_site_method()
