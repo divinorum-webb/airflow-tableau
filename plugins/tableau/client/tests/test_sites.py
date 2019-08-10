@@ -83,6 +83,38 @@ def update_site_disable_subscriptions_flag(conn):
     return conn, response_a, response_b
 
 
+def update_site_revision_history_enabled_flag(conn):
+    site_json = conn.query_site().json()
+    site_id = site_json['site']['id']
+    response_a = conn.update_site(site_id=site_id, revision_history_enabled_flag=True)
+    response_b = conn.update_site(site_id=site_id, revision_history_enabled_flag=False)
+    return conn, response_a, response_b
+
+
+def update_site_revision_limit(conn, new_revision_limit):
+    site_json = conn.query_site().json()
+    site_id = site_json['site']['id']
+    response = conn.update_site(site_id=site_id, revision_limit=new_revision_limit)
+    return conn, response
+
+
+def update_site_misc_flag(conn):
+    response_list = []
+    site_json = conn.query_site().json()
+    site_id = site_json['site']['id']
+    response_list.append(conn.update_site(site_id=site_id, subscribe_others_enabled_flag=True))
+    response_list.append(conn.update_site(site_id=site_id, subscribe_others_enabled_flag=False))
+    # response_list.append(conn.update_site(site_id=site_id, guest_access_enabled_flag=True))
+    response_list.append(conn.update_site(site_id=site_id, guest_access_enabled_flag=False))
+    response_list.append(conn.update_site(site_id=site_id, cache_warmup_enabled_flag=True))
+    response_list.append(conn.update_site(site_id=site_id, cache_warmup_enabled_flag=False))
+    response_list.append(conn.update_site(site_id=site_id, commenting_enabled_flag=True))
+    response_list.append(conn.update_site(site_id=site_id, commenting_enabled_flag=False))
+    response_list.append(conn.update_site(site_id=site_id, flows_enabled_flag=True))
+    response_list.append(conn.update_site(site_id=site_id, flows_enabled_flag=False))
+    return conn, response_list
+
+
 def delete_site(conn):
     site_json = conn.query_site().json()
     site_id = site_json['site']['id']
@@ -166,6 +198,33 @@ def test_update_site_disable_subscriptions_flag():
     conn, update_site_response_a, update_site_response_b = update_site_disable_subscriptions_flag(conn)
     assert update_site_response_a.status_code == 200
     assert update_site_response_b.status_code == 200
+    conn.sign_out()
+
+
+def test_update_site_revision_history_enabled_flag():
+    conn = sign_in()
+    conn.switch_site(UPDATED_CONTENT_URL)
+    conn, update_site_response_a, update_site_response_b = update_site_revision_history_enabled_flag(conn)
+    assert update_site_response_a.status_code == 200
+    assert update_site_response_b.status_code == 200
+    conn.sign_out()
+
+
+def test_update_site_revision_limit():
+    conn = sign_in()
+    conn.switch_site(UPDATED_CONTENT_URL)
+    conn, update_site_response = update_site_revision_limit(conn, 15)
+    assert update_site_response.status_code == 200
+    conn.sign_out()
+
+
+def test_update_site_misc_flag():
+    conn = sign_in()
+    conn.switch_site(UPDATED_CONTENT_URL)
+    conn, response_list = update_site_misc_flag(conn)
+    for i, response in enumerate(response_list):
+        print("iteration {}".format(i))
+        assert response.status_code == 200
     conn.sign_out()
 
 
