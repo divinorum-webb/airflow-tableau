@@ -56,10 +56,8 @@ from tableau.client.requests.UpdateProjectRequest import *
 from tableau.client.requests.UpdateScheduleRequest import *
 from tableau.client.requests.UpdateSiteRequest import *
 from tableau.client.requests.UpdateSubscriptionRequest import *
-from tableau.client.requests.UpdateUserRequest import *
 from tableau.client.requests.UpdateWorkbookConnectionRequest import *
 from tableau.client.requests.UpdateUserRequest import *
-from tableau.client.requests.UpdateWorkbookNowRequest import *
 from tableau.client.requests.UpdateWorkbookRequest import *
 
 
@@ -224,7 +222,7 @@ class TableauServerConnection:
                                                 guest_access_enabled_flag=guest_access_enabled_flag,
                                                 cache_warmup_enabled_flag=cache_warmup_enabled_flag,
                                                 commenting_enabled_flag=commenting_enabled_flag,
-                                                revision_history_enabled=revision_history_enabled_flag,
+                                                revision_history_enabled_flag=revision_history_enabled_flag,
                                                 revision_limit=revision_limit,
                                                 subscribe_others_enabled_flag=subscribe_others_enabled_flag)\
                                                 .get_request()
@@ -271,7 +269,7 @@ class TableauServerConnection:
                                                 guest_access_enabled_flag=guest_access_enabled_flag,
                                                 cache_warmup_enabled_flag=cache_warmup_enabled_flag,
                                                 commenting_enabled_flag=commenting_enabled_flag,
-                                                revision_history_enabled=revision_history_enabled_flag,
+                                                revision_history_enabled_flag=revision_history_enabled_flag,
                                                 revision_limit=revision_limit,
                                                 subscribe_others_enabled_flag=subscribe_others_enabled_flag) \
                                                 .get_request()
@@ -452,13 +450,6 @@ class TableauServerConnection:
                                                 add_tags=True).get_endpoint()
         self.active_headers = self.default_headers
         response = requests.put(url=self.active_endpoint, json=self.active_request, headers=self.active_headers)
-        return response
-
-    def query_views_for_site(self, parameter_dict=None):
-        self.active_endpoint = ViewEndpoint(ts_connection=self, query_views=True,
-                                            parameter_dict=parameter_dict).get_endpoint()
-        self.active_headers = self.default_headers
-        response = requests.get(url=self.active_endpoint, headers=self.active_headers)
         return response
 
     def query_views_for_workbook(self, workbook_id, parameter_dict=None):

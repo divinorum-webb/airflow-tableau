@@ -31,8 +31,8 @@ class CreateSiteRequest(BaseRequest):
     :type cache_warmup_enabled_flag:        boolean
     :param commenting_enabled_flag:         Boolean flag; True if commenting is enabled, False otherwise.
     :type commenting_enabled_flag:          boolean
-    :param revision_history_enabled:        Boolean flag; True if revision history is enabled, False otherwise.
-    :type revision_history_enabled:         boolean
+    :param revision_history_enabled_flag:   Boolean flag; True if revision history is enabled, False otherwise.
+    :type revision_history_enabled_flag:    boolean
     :param revision_limit:                  The maximum number of revisions stored on the server. The number can be
                                             between 2 and 10,000, or set to -1 in order to remove the limit entirely.
     :type revision_limit:                   string
@@ -51,7 +51,7 @@ class CreateSiteRequest(BaseRequest):
                  guest_access_enabled_flag=False,
                  cache_warmup_enabled_flag=False,
                  commenting_enabled_flag=False,
-                 revision_history_enabled=False,
+                 revision_history_enabled_flag=False,
                  revision_limit=None,
                  subscribe_others_enabled_flag=False):
 
@@ -66,7 +66,7 @@ class CreateSiteRequest(BaseRequest):
         self._guest_access_enabled_flag = guest_access_enabled_flag
         self._cache_warmup_enabled_flag = cache_warmup_enabled_flag
         self._commenting_enabled_flag = commenting_enabled_flag
-        self._revision_history_enabled = revision_history_enabled
+        self._revision_history_enabled_flag = revision_history_enabled_flag
         self._revision_limit = revision_limit
         self._subscribe_others_enabled_flag = subscribe_others_enabled_flag
         self.base_create_site_request
@@ -94,7 +94,7 @@ class CreateSiteRequest(BaseRequest):
             'true' if self._guest_access_enabled_flag else None,
             'true' if self._cache_warmup_enabled_flag else None,
             'true' if self._commenting_enabled_flag else None,
-            'true' if self._revision_history_enabled else None,
+            'true' if self._revision_history_enabled_flag else None,
             str(self._revision_limit) if self._revision_limit else None,
             'true' if self._subscribe_others_enabled_flag else None
         ]

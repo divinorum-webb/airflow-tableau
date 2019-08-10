@@ -46,9 +46,9 @@ class UpdateSiteRequest(BaseRequest):
     :type cache_warmup_enabled_flag:        boolean
     :param commenting_enabled_flag:         Boolean flag; True if commenting is enabled on the site, False otherwise.
     :type commenting_enabled_flag:          boolean
-    :param revision_history_enabled:        Boolean flag; True if the site maintains revisions for changes made to
+    :param revision_history_enabled_flag:   Boolean flag; True if the site maintains revisions for changes made to
                                             workbooks and datasources, False otherwise.
-    :type revision_history_enabled:         boolean
+    :type revision_history_enabled_flag:    boolean
     :param revision_limit:                  (Optional) An integer (entered here as a string) between 2 and 10000 to
                                             indicate a limited number of revisions for content.
     :type revision_limit:                   string
@@ -69,7 +69,7 @@ class UpdateSiteRequest(BaseRequest):
                  guest_access_enabled_flag=False,
                  cache_warmup_enabled_flag=False,
                  commenting_enabled_flag=False,
-                 revision_history_enabled=False,
+                 revision_history_enabled_flag=False,
                  revision_limit=None,
                  subscribe_others_enabled_flag=False
                  ):
@@ -86,7 +86,7 @@ class UpdateSiteRequest(BaseRequest):
         self._guest_access_enabled_flag = guest_access_enabled_flag
         self._cache_warmup_enabled_flag = cache_warmup_enabled_flag
         self._commenting_enabled_flag = commenting_enabled_flag
-        self._revision_history_enabled = revision_history_enabled
+        self._revision_history_enabled_flag = revision_history_enabled_flag
         self._revision_limit = revision_limit
         self._subscribe_others_enabled_flag = subscribe_others_enabled_flag
         self._request_body = {'site': {}}
@@ -127,8 +127,8 @@ class UpdateSiteRequest(BaseRequest):
             else 'false' if self._cache_warmup_enabled_flag is False else None,
             'true' if self._commenting_enabled_flag is True
             else 'false' if self._commenting_enabled_flag is False else None,
-            'true' if self._revision_history_enabled is True
-            else 'false' if self._revision_history_enabled is False else None,
+            'true' if self._revision_history_enabled_flag is True
+            else 'false' if self._revision_history_enabled_flag is False else None,
             str(self._revision_limit) if self._revision_limit else None,
             'true' if self._subscribe_others_enabled_flag is True
             else 'false' if self._subscribe_others_enabled_flag is False else None
