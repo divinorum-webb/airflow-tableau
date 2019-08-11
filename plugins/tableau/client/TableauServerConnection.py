@@ -350,7 +350,7 @@ class TableauServerConnection:
     def delete_flow(self, flow_id):
         self.active_endpoint = FlowEndpoint(ts_connection=self, flow_id=flow_id, delete_flow=True).get_endpoint()
         self.active_headers = self.default_headers
-        response = requests.post(url=self.active_endpoint, headers=self.active_headers)
+        response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
         return response
 
     def download_flow(self, flow_id):
@@ -380,9 +380,12 @@ class TableauServerConnection:
         return response
 
     def update_flow(self, flow_id, new_project_id=None, new_owner_id=None):
-        self.active_request = UpdateFlowRequest(ts_connection=self, new_project_id=new_project_id,
+        self.active_request = UpdateFlowRequest(ts_connection=self,
+                                                new_project_id=new_project_id,
                                                 new_owner_id=new_owner_id).get_request()
-        self.active_endpoint = FlowEndpoint(ts_connection=self, flow_id=flow_id, update_flow=True).get_endpoint()
+        self.active_endpoint = FlowEndpoint(ts_connection=self,
+                                            flow_id=flow_id,
+                                            update_flow=True).get_endpoint()
         self.active_headers = self.default_headers
         response = requests.put(url=self.active_endpoint, json=self.active_request, headers=self.active_headers)
         return response
