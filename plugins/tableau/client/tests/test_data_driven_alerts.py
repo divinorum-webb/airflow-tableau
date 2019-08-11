@@ -2,6 +2,7 @@ from tableau.client.TableauServerConnection import TableauServerConnection
 from tableau.client.config.config import tableau_server_config
 
 TABLEAU_SERVER_CONFIG_ENV = 'tableau_prod'
+TEST_USERNAME = tableau_server_config[TABLEAU_SERVER_CONFIG_ENV]['username']
 
 
 def sign_in():
@@ -13,7 +14,7 @@ def sign_in():
 def get_active_user_id(conn):
     users = conn.get_users_on_site().json()['users']['user']
     for user in users:
-        if user['name'] == tableau_server_config[TABLEAU_SERVER_CONFIG_ENV]['username']:
+        if user['name'] == TEST_USERNAME:
             return user['id']
     return users.pop()['id']
 
@@ -21,7 +22,7 @@ def get_active_user_id(conn):
 def get_alt_user_id(conn):
     users = conn.get_users_on_site().json()['users']['user']
     for user in users:
-        if user['name'] != tableau_server_config[TABLEAU_SERVER_CONFIG_ENV]['username']:
+        if user['name'] != TEST_USERNAME:
             return user['id']
     return users.pop()['id']
 
@@ -108,7 +109,7 @@ def test_add_user_to_data_driven_alert():
     sample_alert_id = get_data_driven_alert_id(conn)
     alt_user_id = get_alt_user_id(conn)
     response = conn.add_user_to_data_driven_alert(alt_user_id, sample_alert_id)
-    assert response.status_code
+    assert response.status_code == 200
     conn.sign_out()
 
 
@@ -117,7 +118,7 @@ def test_delete_user_from_data_driven_alert():
     sample_alert_id = get_data_driven_alert_id(conn)
     alt_user_id = get_alt_user_id(conn)
     response = conn.delete_user_from_data_driven_alert(alt_user_id, sample_alert_id)
-    assert response.status_code
+    assert response.status_code == 204
     conn.sign_out()
 
 
