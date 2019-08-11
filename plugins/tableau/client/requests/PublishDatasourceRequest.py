@@ -1,3 +1,7 @@
+import os
+from requests.packages.urllib3.fields import RequestField
+from requests.packages.urllib3.filepost import encode_multipart_formdata
+
 from tableau.client.requests.BaseRequest import BaseRequest
 
 
