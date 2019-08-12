@@ -1,64 +1,22 @@
 import requests
 
-from tableau.client.decorators.verify_signed_in import *
-from tableau.client.endpoints.AuthEndpoint import *
-from tableau.client.endpoints.DataAlertEndpoint import *
-from tableau.client.endpoints.DatasourceEndpoint import *
-from tableau.client.endpoints.FavoritesEndpoint import *
-from tableau.client.endpoints.FileUploadEndpoint import *
-from tableau.client.endpoints.FlowEndpoint import *
-from tableau.client.endpoints.GroupEndpoint import *
-from tableau.client.endpoints.JobsEndpoint import *
-from tableau.client.endpoints.PermissionsEndpoint import *
-from tableau.client.endpoints.ProjectEndpoint import *
-from tableau.client.endpoints.SchedulesEndpoint import *
-from tableau.client.endpoints.SiteEndpoint import *
-from tableau.client.endpoints.SubscriptionsEndpoint import *
-from tableau.client.endpoints.TasksEndpoint import *
-from tableau.client.endpoints.UserEndpoint import *
-from tableau.client.endpoints.ViewEndpoint import *
-from tableau.client.endpoints.WorkbookEndpoint import *
-from tableau.client.requests.AddDatasourcePermissionsRequest import *
-from tableau.client.requests.AddDatasourceToFavoritesRequest import *
-from tableau.client.requests.AddDatasourceToScheduleRequest import *
-from tableau.client.requests.AddDefaultPermissionsRequest import *
-from tableau.client.requests.AddFlowPermissionsRequest import *
-from tableau.client.requests.AddFlowToScheduleRequest import *
-from tableau.client.requests.AddProjectPermissionsRequest import *
-from tableau.client.requests.AddProjectToFavoritesRequest import *
-from tableau.client.requests.AddTagsRequest import *
-from tableau.client.requests.AddUserToAlertRequest import *
-from tableau.client.requests.AddUserToGroupRequest import *
-from tableau.client.requests.AddUserToSiteRequest import *
-from tableau.client.requests.AddViewToFavoritesRequest import *
-from tableau.client.requests.AddViewPermissionsRequest import *
-from tableau.client.requests.AddWorkbookPermissionsRequest import *
-from tableau.client.requests.AddWorkbookToFavoritesRequest import *
-from tableau.client.requests.AddWorkbookToScheduleRequest import *
-from tableau.client.requests.CreateGroupRequest import *
-from tableau.client.requests.CreateProjectRequest import *
-from tableau.client.requests.CreateScheduleRequest import *
-from tableau.client.requests.CreateSiteRequest import *
-from tableau.client.requests.CreateSubscriptionRequest import *
-from tableau.client.requests.EmptyRequest import *
-from tableau.client.requests.PublishDatasourceRequest import *
-from tableau.client.requests.PublishFlowRequest import *
-from tableau.client.requests.PublishWorkbookRequest import *
-from tableau.client.requests.SignInRequest import *
-from tableau.client.requests.SwitchSiteRequest import *
-from tableau.client.requests.UpdateDataAlertRequest import *
-from tableau.client.requests.UpdateDatasourceConnectionRequest import *
-from tableau.client.requests.UpdateDatasourceRequest import *
-from tableau.client.requests.UpdateFlowConnectionRequest import *
-from tableau.client.requests.UpdateFlowRequest import *
-from tableau.client.requests.UpdateGroupRequest import *
-from tableau.client.requests.UpdateProjectRequest import *
-from tableau.client.requests.UpdateScheduleRequest import *
-from tableau.client.requests.UpdateSiteRequest import *
-from tableau.client.requests.UpdateSubscriptionRequest import *
-from tableau.client.requests.UpdateWorkbookConnectionRequest import *
-from tableau.client.requests.UpdateUserRequest import *
-from tableau.client.requests.UpdateWorkbookRequest import *
+from .endpoints import AuthEndpoint, DataAlertEndpoint, DatasourceEndpoint, \
+    FavoritesEndpoint, FileUploadEndpoint, FlowEndpoint, GroupEndpoint, JobsEndpoint, PermissionsEndpoint, \
+    ProjectEndpoint, SchedulesEndpoint, SiteEndpoint, SubscriptionsEndpoint, UserEndpoint, \
+    ViewEndpoint, WorkbookEndpoint
+from .requests import AddDatasourcePermissionsRequest, AddDatasourceToFavoritesRequest, \
+    AddDatasourceToScheduleRequest, AddDefaultPermissionsRequest, AddFlowPermissionsRequest, \
+    AddFlowToScheduleRequest, AddProjectPermissionsRequest, AddProjectToFavoritesRequest, \
+    AddTagsRequest, AddUserToAlertRequest, AddUserToGroupRequest, AddUserToSiteRequest, \
+    AddViewPermissionsRequest, AddViewToFavoritesRequest, AddWorkbookPermissionsRequest, \
+    AddWorkbookToFavoritesRequest, AddWorkbookToScheduleRequest, CreateGroupRequest, \
+    CreateProjectRequest, CreateScheduleRequest, CreateSiteRequest, CreateSubscriptionRequest, \
+    EmptyRequest, PublishDatasourceRequest, PublishFlowRequest, PublishWorkbookRequest, \
+    SignInRequest, SwitchSiteRequest, UpdateDataAlertRequest, UpdateDatasourceConnectionRequest, \
+    UpdateDatasourceRequest, UpdateFlowConnectionRequest, UpdateFlowRequest, UpdateGroupRequest, \
+    UpdateProjectRequest, UpdateScheduleRequest, UpdateSiteRequest, UpdateSubscriptionRequest, \
+    UpdateUserRequest, UpdateWorkbookConnectionRequest, UpdateWorkbookRequest
+from .decorators import verify_response, verify_signed_in
 
 
 class TableauServerConnection:
