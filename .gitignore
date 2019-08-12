@@ -25,5 +25,5 @@ sftp-config.json
 # Python
 __pycache__
 
-# actual airflow.cfg file
-config/airflow.cfg
+# actual airflow.cfg file - uncomment if it has sensitive info
+# config/airflow.cfg

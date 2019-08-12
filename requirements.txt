@@ -1,6 +1,4 @@
 pandas
 numpy
 requests
-json
-os
 functools

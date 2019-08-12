@@ -12,11 +12,11 @@ jobs:
       - run: 
           name: Build docker image
           command: |
-            docker build -t puckel/docker-airflow .
+            docker build -t divinorum-webb/docker-airflow .
       - run: 
           name: Test docker image
           command: |
-            docker run puckel/docker-airflow version |grep '1.10.3'
+            docker run divinorum-webb/docker-airflow version |grep '1.10.3'
 workflows:
   version: 2
   build_and_test:
