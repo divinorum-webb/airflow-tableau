@@ -1,8 +1,13 @@
-from tableau.client.requests.base_request import BaseRequest
+import os
+import json
+from urllib3.fields import RequestField
+from urllib3.filepost import encode_multipart_formdata
+
+from tableau.client.requests import BaseRequest
 
 
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
-FILESIZE_LIMIT = 1024 * 1024 * 60  # 60MB
+FILE_SIZE_LIMIT = 1024 * 1024 * 60  # 60MB
 
 
 class PublishWorkbookRequest(BaseRequest):
@@ -189,7 +194,7 @@ class PublishWorkbookRequest(BaseRequest):
 
     def _file_requires_chunking(self):
         file_size = os.path.getsize(self._workbook_file_path)
-        if file_size > FILESIZE_LIMIT:
+        if file_size > FILE_SIZE_LIMIT:
             return True
 
     def get_workbook(self):

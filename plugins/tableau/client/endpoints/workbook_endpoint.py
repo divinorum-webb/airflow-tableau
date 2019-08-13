@@ -50,6 +50,9 @@ class WorkbookEndpoint(BaseEndpoint):
     :type remove_workbook_revision:             boolean
     :param download_workbook:                   Boolean flag; True if downloading workbook content, False otherwise.
     :type download_workbook:                    boolean
+    :param download_workbook_pdf:               Boolean flag; Ture if downloading a specific workbook's PDF,
+                                                False otherwise.
+    :type download_workbook_pdf:                boolean
     :param download_workbook_revision:          Boolean flag; Ture if downloading a specific workbook revision,
                                                 False otherwise.
     :type download_workbook_revision:           boolean
@@ -82,6 +85,7 @@ class WorkbookEndpoint(BaseEndpoint):
                  get_workbook_revisions=False,
                  remove_workbook_revision=False,
                  download_workbook=False,
+                 download_workbook_pdf=False,
                  download_workbook_revision=False,
                  refresh_workbook=False,
                  parameter_dict=None):
@@ -107,6 +111,7 @@ class WorkbookEndpoint(BaseEndpoint):
         self._get_workbook_revisions = get_workbook_revisions
         self._remove_workbook_revision = remove_workbook_revision
         self._download_workbook = download_workbook
+        self._download_workbook_pdf = download_workbook_pdf
         self._download_workbook_revision = download_workbook_revision
         self._refresh_workbook = refresh_workbook
         self._parameter_dict = parameter_dict
@@ -172,8 +177,50 @@ class WorkbookEndpoint(BaseEndpoint):
                                         self._revision_number)
 
     @property
+    def base_workbook_download_pdf_url(self):
+        return "{0}/pdf".format(self.base_workbook_id_url)
+
+    @property
     def base_workbook_refresh_url(self):
         return "{0}/refresh".format(self.base_workbook_id_url)
+
+    @property
+    def valid_page_orientations(self):
+        return [
+            'Portrait',
+            'Landscape'
+        ]
+
+    @property
+    def valid_page_types(self):
+        return [
+            'A3',
+            'A4',
+            'A5',
+            'B5',
+            'Executive',
+            'Folio',
+            'Ledger',
+            'Legal',
+            'Letter',
+            'Note',
+            'Quarto',
+            'Tabloid'
+        ]
+
+    def _validate_parameter_dict(self):
+        if self._parameter_dict:
+            parameter_keys = [key.lower() for key in self._parameter_dict.keys()]
+            if 'orientation' in parameter_keys:
+                if self._parameter_dict['orientation'] in self.valid_page_orientations:
+                    pass
+                else:
+                    raise self._invalid_parameter_exception()
+            if 'type' in parameter_keys:
+                if self._parameter_dict['type'] in self.valid_page_types:
+                    pass
+                else:
+                    raise self._invalid_parameter_exception()
 
     def get_endpoint(self):
         if self._workbook_id:
@@ -203,6 +250,8 @@ class WorkbookEndpoint(BaseEndpoint):
                 url = self.base_workbook_revision_removal_url
             elif self._download_workbook:
                 url = self.base_workbook_content_url
+            elif self._download_workbook_pdf:
+                url = self.base_workbook_download_pdf_url
             elif self._download_workbook_revision and self._revision_number:
                 url = self.base_workbook_revision_download_url
             elif self._refresh_workbook:

@@ -31,6 +31,7 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
         self._connection_username = connection_username
         self._connection_password = connection_password
         self._embed_password_flag = embed_password_flag
+        self._validate_inputs()
         self.base_update_workbook_connection_request
 
     @property
@@ -62,6 +63,15 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
             self._connection_password,
             self._embed_password_flag
         ]
+
+    def _validate_inputs(self):
+        if self._embed_password_flag:
+            if self._connection_username and self._connection_password:
+                pass
+            else:
+                raise self._invalid_parameter_exception()
+        else:
+            self._connection_password = ''
 
     @property
     def base_update_workbook_connection_request(self):
