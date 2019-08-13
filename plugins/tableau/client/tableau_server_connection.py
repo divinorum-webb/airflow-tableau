@@ -2,7 +2,7 @@ import requests
 
 from .endpoints import AuthEndpoint, DataAlertEndpoint, DatasourceEndpoint, \
     FavoritesEndpoint, FileUploadEndpoint, FlowEndpoint, GroupEndpoint, JobsEndpoint, PermissionsEndpoint, \
-    ProjectEndpoint, SchedulesEndpoint, SiteEndpoint, SubscriptionsEndpoint, UserEndpoint, \
+    ProjectEndpoint, SchedulesEndpoint, SiteEndpoint, SubscriptionsEndpoint, UserEndpoint, TasksEndpoint, \
     ViewEndpoint, WorkbookEndpoint
 from .requests import AddDatasourcePermissionsRequest, AddDatasourceToFavoritesRequest, \
     AddDatasourceToScheduleRequest, AddDefaultPermissionsRequest, AddFlowPermissionsRequest, \
@@ -647,6 +647,15 @@ class TableauServerConnection:
         response = requests.get(url=self.active_endpoint, headers=self.active_headers)
         return response
 
+    def download_data_source(self, datasource_id, parameter_dict=None):
+        self.active_endpoint = DatasourceEndpoint(ts_connection=self,
+                                                  datasource_id=datasource_id,
+                                                  download_datasource=True,
+                                                  parameter_dict=parameter_dict).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.get(url=self.active_endpoint, headers=self.active_headers)
+        return response
+
     def download_data_source_revision(self, datasource_id, revision_number, parameter_dict=None):
         self.active_endpoint = DatasourceEndpoint(ts_connection=self, datasource_id=datasource_id,
                                                   revision_number=revision_number,
@@ -1272,7 +1281,7 @@ class TableauServerConnection:
 
     def publish_data_source(self, datasource_file_path, datasource_name, project_id, connection_username=None,
                             connection_password=None,
-                            embed_credentials_flag=False, oauth_flag=False, parameter_dict={}):
+                            embed_credentials_flag=False, oauth_flag=False, parameter_dict=None):
         publish_request = PublishDatasourceRequest(ts_connection=self,
                                                    datasource_name=datasource_name,
                                                    datasource_file_path=datasource_file_path,
@@ -1292,7 +1301,7 @@ class TableauServerConnection:
                          user_id=None, server_address=None, port_number=None, connection_username=None,
                          connection_password=None,
                          embed_credentials_flag=False, oauth_flag=False, workbook_views_to_hide=None,
-                         hide_view_flag=False, parameter_dict={}):
+                         hide_view_flag=False, parameter_dict=None):
         publish_request = PublishWorkbookRequest(ts_connection=self,
                                                  workbook_name=workbook_name,
                                                  workbook_file_path=workbook_file_path,
@@ -1317,7 +1326,7 @@ class TableauServerConnection:
     def publish_flow(self, flow_file_path, flow_name, project_id, flow_description=None, server_address=None,
                      port_number=None,
                      connection_username=None, connection_password=None, embed_credentials_flag=False, oauth_flag=False,
-                     parameter_dict={}):
+                     parameter_dict=None):
         publish_request = PublishFlowRequest(ts_connection=self,
                                              flow_file_path=flow_file_path,
                                              flow_name=flow_name,

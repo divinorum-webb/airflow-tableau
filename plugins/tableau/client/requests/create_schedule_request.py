@@ -10,7 +10,7 @@ class CreateScheduleRequest(BaseRequest):
     :param schedule_name:               The name of the schedule being created.
     :type schedule_name:                string
     :param schedule_priority:           The priority value (1-100) for the schedule
-    :type schedule_priority:            string
+    :type schedule_priority:            string or int
     :param schedule_type:               The schedule type (Flow, Extract, or Subscription)
     :type schedule_type:                string
     :param schedule_execution_order:    Set this value to 'Parallel' to allow jobs associated with this schedule to
@@ -60,7 +60,7 @@ class CreateScheduleRequest(BaseRequest):
         self._interval_expression_dict = interval_expression_dict
         self._interval_expression_keys, self._interval_expression_values = None, None
         self._validate_inputs()
-        self.base_create_schedule_request
+        self.base_create_schedule_request()
 
     @property
     def required_schedule_param_keys(self):
@@ -125,8 +125,8 @@ class CreateScheduleRequest(BaseRequest):
     def _set_interval_expressions(self):
         if self._interval_expression_dict:
             if any(self._interval_expression_dict.values()):
-                self._interval_expression_keys, self._interval_expression_values = self._unpack_interval_expressions_dict(
-                    self._interval_expression_dict)
+                self._interval_expression_keys, self._interval_expression_values = \
+                    self._unpack_interval_expressions_dict(self._interval_expression_dict)
 
     @staticmethod
     def _get_parameters_list(param_keys, param_values):
@@ -136,7 +136,6 @@ class CreateScheduleRequest(BaseRequest):
                 params_list.append({key: param_values[i]})
         return params_list
 
-    @property
     def base_create_schedule_request(self):
         self._request_body.update({'schedule': {'frequencyDetails': {}}})
         return self._request_body

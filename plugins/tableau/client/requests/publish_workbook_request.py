@@ -23,7 +23,8 @@ class PublishWorkbookRequest(BaseRequest):
     :type workbook_file_path:           string
     :param project_id:                  The project ID of the project the workbook is being published to.
     :type project_id:                   string
-    :param show_tabs_flag:              Boolean flag; True if the workbook will show views as tabs, false otherwise.
+    :param show_tabs_flag:              (Optional) Boolean flag; True if the workbook will show views as tabs,
+                                        false otherwise.
     :type show_tabs_flag:               boolean
     :param user_id:                     If generating thumbnails as a specific user, specify the user ID here.
     :type user_id:                      string
@@ -45,18 +46,18 @@ class PublishWorkbookRequest(BaseRequest):
                                         example, if the data source uses OAuth), the server ignores the element
                                         and its attributes.
     :type connection_password:          string
-    :param embed_credentials_flag:      List of boolean flags;; True if embedding credentials in the published workbook,
+    :param embed_credentials_flag:      (Optional) Boolean fkag; True if embedding credentials in the published
+                                        workbook, False otherwise.
+    :type embed_credentials_flag:       boolean
+    :param oauth_flag:                  List of boolean flags; True if OAuth is used for the credentials,
                                         False otherwise.
-    :type embed_credentials_flag:       list
-    :param oauth_flag:                  List of boolean flags;; True if OAuth is used for the credentials,
-                                        False otherwise.
-    :type oauth_flag:                   list
+    :type oauth_flag:                   boolean
     :param workbook_views_to_hide:      A list of the views to hide for the workbook being published. The list should
                                         contain the view names, not view IDs.
     :type workbook_views_to_hide:       list
-    :param hide_view_flag:              List of boolean flags; True if the published workbook will hide any of its
+    :param hide_view_flag:              (Optional) Boolean flag; True if the published workbook will hide any of its
                                         views, False otherwise.
-    :type hide_view_flag:               list
+    :type hide_view_flag:               boolean
     """
     def __init__(self,
                  ts_connection,

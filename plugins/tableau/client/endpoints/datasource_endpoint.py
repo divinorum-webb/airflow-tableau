@@ -134,8 +134,8 @@ class DatasourceEndpoint(BaseEndpoint):
 
     @property
     def base_download_datasource_revision_url(self):
-        return "{0}/content".format(self.base_datasource_revision_number_url,
-                                    self._revision_number)
+        return "{0}/{1}/content".format(self.base_datasource_revisions_url,
+                                        self._revision_number)
 
     @property
     def base_datasource_connection_id_url(self):

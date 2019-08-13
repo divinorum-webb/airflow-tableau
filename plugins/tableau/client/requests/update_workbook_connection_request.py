@@ -32,7 +32,7 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
         self._connection_password = connection_password
         self._embed_password_flag = embed_password_flag
         self._validate_inputs()
-        self.base_update_workbook_connection_request
+        self.base_update_workbook_connection_request()
 
     @property
     def optional_parameter_keys(self):
@@ -73,7 +73,6 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
         else:
             self._connection_password = ''
 
-    @property
     def base_update_workbook_connection_request(self):
         self._request_body.update({'connection': {}})
         return self._request_body

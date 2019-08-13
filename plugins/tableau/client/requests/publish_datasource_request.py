@@ -1,8 +1,10 @@
 import os
-from requests.packages.urllib3.fields import RequestField
-from requests.packages.urllib3.filepost import encode_multipart_formdata
+import json
+from urllib3.fields import RequestField
+from urllib3.filepost import encode_multipart_formdata
 
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
+from tableau.client.exceptions import InvalidFileTypeException
 
 
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
@@ -53,7 +55,7 @@ class PublishDatasourceRequest(BaseRequest):
         self._embed_credentials_flag = embed_credentials_flag
         self._oauth_flag = oauth_flag
         self._file_is_chunked = self._file_requires_chunking()
-        self.base_publish_datasource_request
+        self.base_publish_datasource_request()
 
     @property
     def optional_credentials_param_keys(self):
@@ -69,11 +71,14 @@ class PublishDatasourceRequest(BaseRequest):
         return [
             self._connection_username,
             self._connection_password,
-            'true' if self._embed_credentials_flag is True else 'false' if self._embed_credentials_flag is False else None,
-            'true' if self._oauth_flag is True else 'false' if self._oauth_flag is False else None
+            'true' if self._embed_credentials_flag is True
+            else 'false' if self._embed_credentials_flag is False
+            else None,
+            'true' if self._oauth_flag is True
+            else 'false' if self._oauth_flag is False
+            else None
         ]
 
-    @property
     def base_publish_datasource_request(self):
         self._request_body.update({
             'datasource': {
@@ -101,14 +106,17 @@ class PublishDatasourceRequest(BaseRequest):
         datasource_file = os.path.basename(self._datasource_file_path)
         with open(self._datasource_file_path, 'rb') as f:
             datasource_bytes = f.read()
-        if 'tdsx' in datasource_file.split('.'):
+        file_extension = datasource_file.split('.')[-1]
+        if 'tdsx' in file_extension:
             pass
-        elif 'tds' in datasource_file.split('.'):
+        elif 'tds' in file_extension:
             pass
-        elif 'tde' in datasource_file.split('.'):
+        elif 'tde' in file_extension:
             pass
         else:
-            raise Exception('Invalid datasource type provided. Datasource must be a tdsx, tds, or tde file.')
+            raise InvalidFileTypeException(self.__class__.__name__,
+                                           file_variety='datasource',
+                                           file_extension=file_extension)
         return datasource_file, datasource_bytes
 
     # testing for chunk upload
@@ -130,7 +138,6 @@ class PublishDatasourceRequest(BaseRequest):
         publishing_headers.update({'content-type': publish_content_type})
         parameter_dict.update({'datasourceType': 'datasourceType={}'.format(file_extension)})
         return publishing_headers, parameter_dict
-
 
     @staticmethod
     def read_chunks(file_path):
