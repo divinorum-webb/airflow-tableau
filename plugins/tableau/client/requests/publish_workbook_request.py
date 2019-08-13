@@ -4,6 +4,7 @@ from urllib3.fields import RequestField
 from urllib3.filepost import encode_multipart_formdata
 
 from tableau.client.requests import BaseRequest
+from tableau.client.exceptions import InvalidFileTypeException
 
 
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
@@ -90,7 +91,7 @@ class PublishWorkbookRequest(BaseRequest):
         self.payload = None
         self.content_type = None
         self._file_is_chunked = self._file_requires_chunking()
-        self.base_publish_workbook_request
+        self.base_publish_workbook_request()
 
     @property
     def optional_workbook_param_keys(self):
@@ -154,7 +155,6 @@ class PublishWorkbookRequest(BaseRequest):
             [values_list.append(None) for key in self.optional_view_param_keys]
         return values_list
 
-    @property
     def base_publish_workbook_request(self):
         self._request_body.update({
             'workbook': {
@@ -201,18 +201,21 @@ class PublishWorkbookRequest(BaseRequest):
         workbook_file = os.path.basename(self._workbook_file_path)
         with open(self._workbook_file_path, 'rb') as f:
             workbook_bytes = f.read()
-        if 'twbx' in workbook_file.split('.'):
+        file_extension = workbook_file.split('.')[-1]
+        if 'twbx' in file_extension:
             pass
-        elif 'twb' in workbook_file.split('.'):
+        elif 'twb' in file_extension:
             pass
         else:
-            raise Exception('Invalid workbook type provided. Workbook must be a twbx or twb file.')
+            raise InvalidFileTypeException(self.__class__.__name__,
+                                           file_variety='workbook',
+                                           file_extension=file_extension)
         return workbook_file, workbook_bytes
 
     # testing for chunk upload
     def publish_prep(self, publish_content_type, parameter_dict):
         filename = os.path.basename(self._workbook_file_path)
-        file_extension = filename.split('.')[1]
+        file_extension = filename.split('.')[-1]
 
         if self._file_is_chunked:
             upload_session_id = self._connection.initiate_file_upload().json()['fileUpload']['uploadSessionId']

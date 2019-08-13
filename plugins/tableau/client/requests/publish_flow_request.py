@@ -163,7 +163,7 @@ class PublishFlowRequest(BaseRequest):
     # testing for chunk upload
     def publish_prep(self, publish_content_type, parameter_dict):
         filename = os.path.basename(self._flow_file_path)
-        file_extension = filename.split('.')[1]
+        file_extension = filename.split('.')[-1]
 
         if self._file_is_chunked:
             upload_session_id = self._connection.initiate_file_upload().json()['fileUpload']['uploadSessionId']

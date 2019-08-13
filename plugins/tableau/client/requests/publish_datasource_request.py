@@ -6,7 +6,7 @@ from tableau.client.requests.base_request import BaseRequest
 
 
 CHUNK_SIZE = 1024 * 1024 * 5  # 5MB
-FILESIZE_LIMIT = 1024 * 1024 * 60  # 60MB
+FILE_SIZE_LIMIT = 1024 * 1024 * 60  # 60MB
 
 
 class PublishDatasourceRequest(BaseRequest):
@@ -94,7 +94,7 @@ class PublishDatasourceRequest(BaseRequest):
 
     def _file_requires_chunking(self):
         file_size = os.path.getsize(self._datasource_file_path)
-        if file_size > FILESIZE_LIMIT:
+        if file_size > FILE_SIZE_LIMIT:
             return True
 
     def get_datasource(self):
@@ -114,7 +114,7 @@ class PublishDatasourceRequest(BaseRequest):
     # testing for chunk upload
     def publish_prep(self, publish_content_type, parameter_dict):
         filename = os.path.basename(self._datasource_file_path)
-        file_extension = filename.split('.')[1]
+        file_extension = filename.split('.')[-1]
 
         if self._file_is_chunked:
             upload_session_id = self._connection.initiate_file_upload().json()['fileUpload']['uploadSessionId']

@@ -1,3 +1,6 @@
+from tableau.client.exceptions import InvalidParameterException
+
+
 class BaseEndpoint:
     """
     Base endpoint for sending API request URLs to Tableau Server.
@@ -36,5 +39,5 @@ class BaseEndpoint:
         return "{0}{1}".format(url, text_to_append)
     
     def _invalid_parameter_exception(self):
-        raise Exception("{} received an invalid combination of parameters: \n{}".format(self.__class__.__name__,
-                                                                                        vars(self)))
+        raise InvalidParameterException(self.__class__.__name__,
+                                        vars(self))
