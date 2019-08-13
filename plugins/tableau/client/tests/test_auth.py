@@ -1,4 +1,4 @@
-from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.tableau_server_connection import TableauServerConnection
 from tableau.client.config.config import tableau_server_config
 
 

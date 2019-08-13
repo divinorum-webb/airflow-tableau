@@ -4,7 +4,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.tableau_server_connection import TableauServerConnection
 from tableau.client.config.config import tableau_server_config
 
 

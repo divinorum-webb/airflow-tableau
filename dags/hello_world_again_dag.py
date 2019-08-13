@@ -7,7 +7,7 @@ from airflow.operators.python_operator import PythonOperator
 # from airflow.operators.dagrun_operator import TriggerDagRunOperator
 # from airflow.utils.trigger_rule import TriggerRule
 
-from tableau.client.TableauServerConnection import TableauServerConnection
+from tableau.client.tableau_server_connection import TableauServerConnection
 from tableau.client.config.config import tableau_server_config
 
 
