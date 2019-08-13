@@ -1,4 +1,5 @@
 pandas
 numpy
 requests
+urllib3
 functools
