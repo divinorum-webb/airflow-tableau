@@ -24,13 +24,12 @@ class TableauServerConnection:
                  config_json,
                  env='tableau_prod'):
         """
-        Initialize the TableauServer object.
-        The config_json parameter requires a JSON configuration file.
-        The env parameter is a string that indicates which environment to reference from the config file.
-        :param config_json:     The configuration object. This should be a dict / JSON object that defines the
-                                Tableau Server configuration.
+        :param config_json:     A configuration dict or JSON file. This is typically a JSON file that defines the
+                                Tableau Server configuration details.
         :type config_json:      JSON or dict
-        :param env:             The environment from the configuration file to use.
+        :param env:             The environment from the configuration file to use. This allows for multiple
+                                configurations to exist within the configuration file / dict, which could hold details
+                                for other servers (dev, test, prod, other Tableau Server instance, etc.)
         :type env:              string
         """
         self._config = config_json
@@ -457,6 +456,19 @@ class TableauServerConnection:
         response = requests.get(url=self.active_endpoint, headers=self.active_headers)
         return response
 
+    def get_view(self, view_id):
+        self.active_endpoint = ViewEndpoint(ts_connection=self, view_id=view_id, query_view=True).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.get(url=self.active_endpoint, headers=self.active_headers)
+        return response
+
+    def query_view(self, view_id):
+        """This extra method exists because the official method 'get_view' appears to break naming conventions"""
+        self.active_endpoint = ViewEndpoint(ts_connection=self, view_id=view_id, query_view=True).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.get(url=self.active_endpoint, headers=self.active_headers)
+        return response
+
     def query_workbook(self, workbook_id, parameter_dict=None):
         self.active_endpoint = WorkbookEndpoint(ts_connection=self, workbook_id=workbook_id, query_workbook=True,
                                                 parameter_dict=parameter_dict).get_endpoint()
@@ -512,6 +524,13 @@ class TableauServerConnection:
 
     def download_workbook(self, workbook_id, parameter_dict=None):
         self.active_endpoint = WorkbookEndpoint(ts_connection=self, workbook_id=workbook_id, download_workbook=True,
+                                                parameter_dict=parameter_dict).get_endpoint()
+        self.active_headers = self.default_headers
+        response = requests.get(url=self.active_endpoint, headers=self.active_headers)
+        return response
+
+    def download_workbook_pdf(self, workbook_id, parameter_dict=None):
+        self.active_endpoint = WorkbookEndpoint(ts_connection=self, workbook_id=workbook_id, download_workbook_pdf=True,
                                                 parameter_dict=parameter_dict).get_endpoint()
         self.active_headers = self.default_headers
         response = requests.get(url=self.active_endpoint, headers=self.active_headers)
