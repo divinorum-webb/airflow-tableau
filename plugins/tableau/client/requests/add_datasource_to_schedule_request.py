@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddDatasourceToScheduleRequest(BaseRequest):
@@ -15,7 +15,7 @@ class AddDatasourceToScheduleRequest(BaseRequest):
                  datasource_id):
         super().__init__(ts_connection)
         self._datasource_id = datasource_id
-        self.base_add_datasource_request
+        self.base_add_datasource_request()
 
     @property
     def required_datasource_param_keys(self):
@@ -25,12 +25,10 @@ class AddDatasourceToScheduleRequest(BaseRequest):
     def required_datasource_param_values(self):
         return [self._datasource_id]
 
-    @property
     def base_add_datasource_request(self):
         self._request_body.update({'task': {'extractRefresh': {}}})
         return self._request_body
 
-    @property
     def modified_add_datasource_request(self):
         self._request_body['task']['extractRefresh'].update({'datasource': {}})
         self._request_body['task']['extractRefresh']['datasource'].update(
@@ -39,4 +37,4 @@ class AddDatasourceToScheduleRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_datasource_request
+        return self.modified_add_datasource_request()

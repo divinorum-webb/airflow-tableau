@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddWorkbookToScheduleRequest(BaseRequest):
@@ -15,7 +15,7 @@ class AddWorkbookToScheduleRequest(BaseRequest):
                  workbook_id):
         super().__init__(ts_connection)
         self._workbook_id = workbook_id
-        self.base_add_workbook_request
+        self.base_add_workbook_request()
 
     @property
     def required_workbook_param_keys(self):
@@ -25,12 +25,10 @@ class AddWorkbookToScheduleRequest(BaseRequest):
     def required_workbook_param_values(self):
         return [self._workbook_id]
 
-    @property
     def base_add_workbook_request(self):
         self._request_body.update({'task': {'extractRefresh': {}}})
         return self._request_body
 
-    @property
     def modified_add_workbook_request(self):
         self._request_body['task']['extractRefresh'].update({'workbook': {}})
         self._request_body['task']['extractRefresh']['workbook'].update(
@@ -39,4 +37,4 @@ class AddWorkbookToScheduleRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_workbook_request
+        return self.modified_add_workbook_request()

@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddProjectPermissionsRequest(BaseRequest):
@@ -31,7 +31,7 @@ class AddProjectPermissionsRequest(BaseRequest):
         self._user_capability_names, self._user_capability_modes = None, None
         self._group_capability_names, self._group_capability_modes = None, None
         self._validate_inputs()
-        self.base_add_permissions_request
+        self.base_add_permissions_request()
 
     @property
     def valid_capability_names(self):
@@ -88,12 +88,10 @@ class AddProjectPermissionsRequest(BaseRequest):
                                     'mode': param_values[i]})
         return params_list
 
-    @property
     def base_add_permissions_request(self):
         self._request_body.update({'permissions': {'granteeCapabilities': []}})
         return self._request_body
 
-    @property
     def modified_add_permissions_request(self):
         if self._user_capability_names:
             capability_dict = {}
@@ -116,4 +114,4 @@ class AddProjectPermissionsRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_permissions_request
+        return self.modified_add_permissions_request()

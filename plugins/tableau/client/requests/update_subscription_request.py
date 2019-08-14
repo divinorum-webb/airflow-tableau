@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateSubscriptionRequest(BaseRequest):
@@ -21,7 +21,6 @@ class UpdateSubscriptionRequest(BaseRequest):
         self._new_subscription_subject = new_subscription_subject
         self._new_schedule_id = new_schedule_id
 
-    @property
     def base_update_subscription_request(self):
         if self._new_subscription_subject and self._new_schedule_id:
             self._request_body.update({
@@ -45,4 +44,4 @@ class UpdateSubscriptionRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_update_subscription_request
+        return self.base_update_subscription_request()

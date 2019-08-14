@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateSiteRequest(BaseRequest):
@@ -134,7 +134,6 @@ class UpdateSiteRequest(BaseRequest):
             else 'false' if self._subscribe_others_enabled_flag is False else None
         ]
 
-    @property
     def base_update_site_request(self):
         if self._user_quota and self._admin_mode != 'ContentOnly':
             self._request_body['site'].update({'userQuota': str(self._user_quota)})
@@ -146,4 +145,4 @@ class UpdateSiteRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_update_site_request
+        return self.base_update_site_request()

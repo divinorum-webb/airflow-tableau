@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateWorkbookRequest(BaseRequest):
@@ -25,7 +25,7 @@ class UpdateWorkbookRequest(BaseRequest):
         self._show_tabs_flag = show_tabs_flag
         self._project_id = project_id
         self._owner_id = owner_id
-        self.base_update_workbook_request
+        self.base_update_workbook_request()
 
     @property
     def optional_workbook_param_keys(self):
@@ -51,12 +51,10 @@ class UpdateWorkbookRequest(BaseRequest):
     def optional_owner_param_values(self):
         return [self._owner_id]
 
-    @property
     def base_update_workbook_request(self):
         self._request_body.update({'workbook': {}})
         return self._request_body
 
-    @property
     def modified_update_workbook_request(self):
         if any(self.optional_workbook_param_values):
             self._request_body['workbook'].update(
@@ -77,4 +75,4 @@ class UpdateWorkbookRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_workbook_request
+        return self.modified_update_workbook_request()

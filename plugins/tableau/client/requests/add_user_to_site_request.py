@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddUserToSiteRequest(BaseRequest):
@@ -23,7 +23,7 @@ class AddUserToSiteRequest(BaseRequest):
         self._user_name = user_name
         self._site_role = site_role
         self._auth_setting = auth_setting
-        self.base_add_user_request
+        self.base_add_user_request()
 
     @property
     def required_user_param_keys(self):
@@ -47,7 +47,6 @@ class AddUserToSiteRequest(BaseRequest):
     def optional_user_param_values(self):
         return [self._auth_setting]
 
-    @property
     def base_add_user_request(self):
         self._request_body.update({'user': {}})
         self._request_body['user'].update(
@@ -55,7 +54,6 @@ class AddUserToSiteRequest(BaseRequest):
                                       self.required_user_param_values))
         return self._request_body
 
-    @property
     def modified_add_user_request(self):
         if any(self.optional_user_param_values):
             self._request_body['user'].update(
@@ -64,4 +62,4 @@ class AddUserToSiteRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_user_request
+        return self.modified_add_user_request()

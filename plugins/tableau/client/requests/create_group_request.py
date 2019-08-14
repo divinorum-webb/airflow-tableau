@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class CreateGroupRequest(BaseRequest):
@@ -28,7 +28,7 @@ class CreateGroupRequest(BaseRequest):
         self._active_directory_group_name = active_directory_group_name
         self._active_directory_domain_name = active_directory_domain_name
         self._default_site_role = default_site_role
-        self.base_create_group_request
+        self.base_create_group_request()
 
     @property
     def required_group_param_keys(self):
@@ -54,7 +54,6 @@ class CreateGroupRequest(BaseRequest):
             self._default_site_role
         ]
 
-    @property
     def base_create_group_request(self):
         if all(self.required_group_param_values):
             self._request_body.update({'group': {}})
@@ -65,7 +64,6 @@ class CreateGroupRequest(BaseRequest):
             self._invalid_parameter_exception()
         return self._request_body
 
-    @property
     def modified_create_group_request(self):
         if any(self.optional_source_param_values):
             self._request_body['group'].update({'import': {}})
@@ -75,4 +73,4 @@ class CreateGroupRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_create_group_request
+        return self.modified_create_group_request()

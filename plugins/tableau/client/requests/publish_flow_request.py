@@ -66,7 +66,7 @@ class PublishFlowRequest(BaseRequest):
         self._embed_credentials_flag = embed_credentials_flag
         self._oauth_flag = oauth_flag
         self._file_is_chunked = self._file_requires_chunking()
-        self.base_publish_flow_request
+        self.base_publish_flow_request()
 
     @property
     def optional_flow_param_keys(self):
@@ -112,7 +112,6 @@ class PublishFlowRequest(BaseRequest):
             self._oauth_flag
         ]
 
-    @property
     def base_publish_flow_request(self):
         self._request_body.update({
             'flow': {
@@ -122,7 +121,6 @@ class PublishFlowRequest(BaseRequest):
         })
         return self._request_body
 
-    @property
     def modified_publish_flow_request(self):
         self._request_body['flow'].update(self._get_parameters_dict(self.optional_flow_param_keys,
                                                                     self.optional_flow_param_values))
@@ -206,12 +204,12 @@ class PublishFlowRequest(BaseRequest):
         return request, content_type
 
     def _publish_chunked_file_request(self):
-        request = self.modified_publish_flow_request
+        request = self.modified_publish_flow_request()
         parts = {'request_payload': (None, json.dumps(request), 'application/json')}
         return self._add_multipart(parts)
 
     def _publish_single_file_request(self):
-        request = self.modified_publish_flow_request
+        request = self.modified_publish_flow_request()
         flow_file, flow_bytes = self.get_flow()
         parts = {'request_payload': (None, json.dumps(request), 'application/json'),
                  'tableau_flow': (flow_file, flow_bytes, 'application/octet-stream')}

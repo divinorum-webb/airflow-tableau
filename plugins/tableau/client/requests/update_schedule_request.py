@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateScheduleRequest(BaseRequest):
@@ -64,7 +64,7 @@ class UpdateScheduleRequest(BaseRequest):
         self._start_time = start_time
         self._end_time = end_time
         self._interval_expression_dict = interval_expression_dict
-        self.base_update_schedule_request
+        self.base_update_schedule_request()
 
     @property
     def optional_schedule_param_keys(self):
@@ -140,12 +140,10 @@ class UpdateScheduleRequest(BaseRequest):
                 params_list.append({key: param_values[i]})
         return params_list
 
-    @property
     def base_update_schedule_request(self):
         self._request_body.update({'schedule': {'frequencyDetails': {}}})
         return self._request_body
 
-    @property
     def modified_update_schedule_request(self):
         if any(self.optional_schedule_param_values):
             self._request_body['schedule'].update(
@@ -165,4 +163,4 @@ class UpdateScheduleRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_schedule_request
+        return self.modified_update_schedule_request()

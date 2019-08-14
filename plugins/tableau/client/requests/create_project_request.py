@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class CreateProjectRequest(BaseRequest):
@@ -25,7 +25,7 @@ class CreateProjectRequest(BaseRequest):
         self._project_description = project_description
         self._content_permissions = content_permissions
         self._parent_project_id = parent_project_id
-        self.base_create_project_request
+        self.base_create_project_request()
 
     @property
     def optional_project_param_keys(self):
@@ -43,12 +43,10 @@ class CreateProjectRequest(BaseRequest):
             self._content_permissions
         ]
 
-    @property
     def base_create_project_request(self):
         self._request_body.update({'project': {'name': self._project_name}})
         return self._request_body
 
-    @property
     def modified_create_project_request(self):
         self._request_body['project'].update(
             self._get_parameters_dict(
@@ -57,4 +55,4 @@ class CreateProjectRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_create_project_request
+        return self.modified_create_project_request()

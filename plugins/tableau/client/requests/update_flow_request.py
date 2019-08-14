@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateFlowRequest(BaseRequest):
@@ -24,7 +24,7 @@ class UpdateFlowRequest(BaseRequest):
         self._new_owner_id = new_owner_id
         self._is_certified_flag = is_certified_flag
         self._certification_note = certification_note
-        self.base_update_flow_request
+        self.base_update_flow_request()
 
     @property
     def optional_project_param_keys(self):
@@ -42,12 +42,10 @@ class UpdateFlowRequest(BaseRequest):
     def optional_owner_param_values(self):
         return [self._new_owner_id]
 
-    @property
     def base_update_flow_request(self):
         self._request_body.update({'flow': {}})
         return self._request_body
 
-    @property
     def modified_update_flow_request(self):
 
         if any(self.optional_project_param_keys):
@@ -65,4 +63,4 @@ class UpdateFlowRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_flow_request
+        return self.modified_update_flow_request()

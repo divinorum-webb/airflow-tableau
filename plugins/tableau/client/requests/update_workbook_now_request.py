@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client import BaseRequest
 
 
 class UpdateWorkbookNowRequest(BaseRequest):
@@ -12,9 +12,8 @@ class UpdateWorkbookNowRequest(BaseRequest):
                  ts_connection):
         super().__init__(ts_connection)
 
-    @property
     def base_update_workbook_now_request(self):
         return self._request_body
 
     def get_request(self):
-        return self.base_update_workbook_now_request
+        return self.base_update_workbook_now_request()

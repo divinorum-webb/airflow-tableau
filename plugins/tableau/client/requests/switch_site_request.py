@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class SwitchSiteRequest(BaseRequest):
@@ -17,7 +17,6 @@ class SwitchSiteRequest(BaseRequest):
         super().__init__(ts_connection)
         self._site_name = site_name
 
-    @property
     def base_switch_site_request(self):
         self._request_body.update({
             'site': {
@@ -27,4 +26,4 @@ class SwitchSiteRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_switch_site_request
+        return self.base_switch_site_request()

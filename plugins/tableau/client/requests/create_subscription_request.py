@@ -49,7 +49,6 @@ class CreateSubscriptionRequest(BaseRequest):
         else:
             self._invalid_parameter_exception()
 
-    @property
     def base_create_subscription_request(self):
         self._request_body.update({
             'subscription': {
@@ -65,4 +64,4 @@ class CreateSubscriptionRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_create_subscription_request
+        return self.base_create_subscription_request()

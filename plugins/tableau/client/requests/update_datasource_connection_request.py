@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateDatasourceConnectionRequest(BaseRequest):
@@ -78,7 +78,6 @@ class UpdateDatasourceConnectionRequest(BaseRequest):
         self._request_body.update({'connection': {}})
         return self._request_body
 
-    @property
     def modified_update_datasource_connection_request(self):
         if any(self.optional_parameter_values_exist):
             self._request_body['connection'].update(
@@ -96,4 +95,4 @@ class UpdateDatasourceConnectionRequest(BaseRequest):
         return params_dict
 
     def get_request(self):
-        return self.modified_update_datasource_connection_request
+        return self.modified_update_datasource_connection_request()
