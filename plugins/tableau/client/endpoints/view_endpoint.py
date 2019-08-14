@@ -1,4 +1,4 @@
-from tableau.client.endpoints import BaseEndpoint
+from tableau.client import BaseEndpoint
 
 
 class ViewEndpoint(BaseEndpoint):

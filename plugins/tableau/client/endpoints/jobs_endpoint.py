@@ -1,4 +1,4 @@
-from tableau.client.endpoints.base_endpoint import BaseEndpoint
+from tableau.client.endpoints import BaseEndpoint
 
 
 class JobsEndpoint(BaseEndpoint):
