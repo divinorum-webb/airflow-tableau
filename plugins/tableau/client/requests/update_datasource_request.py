@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateDatasourceRequest(BaseRequest):
@@ -29,7 +29,7 @@ class UpdateDatasourceRequest(BaseRequest):
         self._new_owner_id = new_owner_id
         self._is_certified_flag = is_certified_flag
         self._certification_note = certification_note
-        self.base_update_datasource_request
+        self.base_update_datasource_request()
 
     @property
     def optional_datasource_param_keys(self):
@@ -61,12 +61,10 @@ class UpdateDatasourceRequest(BaseRequest):
     def optional_owner_param_values(self):
         return [self._new_owner_id]
 
-    @property
     def base_update_datasource_request(self):
         self._request_body.update({'datasource': {}})
         return self._request_body
 
-    @property
     def modified_update_datasource_request(self):
         if any(self.optional_datasource_param_keys):
             self._request_body['datasource'].update(
@@ -88,4 +86,4 @@ class UpdateDatasourceRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_datasource_request
+        return self.modified_update_datasource_request()

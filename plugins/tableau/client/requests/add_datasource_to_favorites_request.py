@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddDatasourceToFavoritesRequest(BaseRequest):
@@ -21,7 +21,6 @@ class AddDatasourceToFavoritesRequest(BaseRequest):
         self._favorite_label = favorite_label
         self._datasource_id = datasource_id
 
-    @property
     def base_add_favorites_request(self):
         self._request_body.update({
             'favorite': {
@@ -32,4 +31,4 @@ class AddDatasourceToFavoritesRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_add_favorites_request
+        return self.base_add_favorites_request()

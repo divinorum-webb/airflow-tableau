@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddFlowToScheduleRequest(BaseRequest):
@@ -15,7 +15,7 @@ class AddFlowToScheduleRequest(BaseRequest):
                  flow_id):
         super().__init__(ts_connection)
         self._flow_id = flow_id
-        self.base_add_flow_request
+        self.base_add_flow_request()
 
     @property
     def required_flow_param_keys(self):
@@ -25,12 +25,10 @@ class AddFlowToScheduleRequest(BaseRequest):
     def required_flow_param_values(self):
         return [self._flow_id]
 
-    @property
     def base_add_flow_request(self):
         self._request_body.update({'task': {'flowRun': {}}})
         return self._request_body
 
-    @property
     def modified_add_flow_request(self):
         self._request_body['task']['flowRun'].update({'flow': {}})
         self._request_body['task']['flowRun']['flow'].update(
@@ -39,4 +37,4 @@ class AddFlowToScheduleRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_flow_request
+        return self.modified_add_flow_request()

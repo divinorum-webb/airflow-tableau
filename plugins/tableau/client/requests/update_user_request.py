@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateUserRequest(BaseRequest):
@@ -41,7 +41,7 @@ class UpdateUserRequest(BaseRequest):
         self._new_password = new_password
         self._new_site_role = new_site_role
         self._new_auth_setting = new_auth_setting
-        self.base_update_user_request
+        self.base_update_user_request()
 
     @property
     def optional_user_param_keys(self):
@@ -63,12 +63,10 @@ class UpdateUserRequest(BaseRequest):
             self._new_auth_setting
         ]
 
-    @property
     def base_update_user_request(self):
         self._request_body.update({'user': {}})
         return self._request_body
 
-    @property
     def modified_update_user_request(self):
         if any(self.optional_user_param_values):
             self._request_body['user'].update(
@@ -77,4 +75,4 @@ class UpdateUserRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_user_request
+        return self.modified_update_user_request()

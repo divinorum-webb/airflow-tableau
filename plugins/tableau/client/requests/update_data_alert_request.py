@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateDataAlertRequest(BaseRequest):
@@ -33,7 +33,7 @@ class UpdateDataAlertRequest(BaseRequest):
         self._data_alert_frequency = data_alert_frequency
         self._data_alert_owner_id = data_alert_owner_id
         self._is_public_flag = is_public_flag
-        self.base_update_alert_request
+        self.base_update_alert_request()
 
     @property
     def optional_alert_param_keys(self):
@@ -59,12 +59,10 @@ class UpdateDataAlertRequest(BaseRequest):
     def optional_owner_param_values(self):
         return [self._data_alert_owner_id]
 
-    @property
     def base_update_alert_request(self):
         self._request_body.update({'dataAlert': {}})
         return self._request_body
 
-    @property
     def modified_update_alert_request(self):
         self._request_body['dataAlert'].update(
             self._get_parameters_dict(
@@ -79,4 +77,4 @@ class UpdateDataAlertRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_update_alert_request
+        return self.modified_update_alert_request()

@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class CreateScheduleRequest(BaseRequest):
@@ -27,7 +27,7 @@ class CreateScheduleRequest(BaseRequest):
     :type end_time:                     string
     :param interval_expression_dict:    This dict specifies the time interval(s) between jobs associated with the
                                         schedule. The value required here depends on the 'schedule_frequency' value.
-                                        If 'schedule_frequency' = 'Hourly', the interval expression should be either
+                                        If 'schedule_frequency' = 'Hourly', the interval expression should be
                                         hours="interval" (where "interval" is a number [1, 2, 4, 6, 8, 12] in quotes).
                                         If 'schedule_frequency' = 'Daily', no interval needs to be specified.
                                         If 'schedule_frequency' = 'Weekly, the interval is weekDay="weekday", where
@@ -140,7 +140,6 @@ class CreateScheduleRequest(BaseRequest):
         self._request_body.update({'schedule': {'frequencyDetails': {}}})
         return self._request_body
 
-    @property
     def modified_create_schedule_request(self):
         self._request_body['schedule'].update(
             self._get_parameters_dict(self.required_schedule_param_keys,
@@ -156,4 +155,4 @@ class CreateScheduleRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_create_schedule_request
+        return self.modified_create_schedule_request()

@@ -88,7 +88,6 @@ class PublishDatasourceRequest(BaseRequest):
         })
         return self._request_body
 
-    @property
     def modified_publish_datasource_request(self):
         if any(self.optional_credentials_param_values):
             self._request_body['datasource'].update({'connectionCredentials': {}})
@@ -165,12 +164,12 @@ class PublishDatasourceRequest(BaseRequest):
         return request, content_type
 
     def _publish_chunked_file_request(self):
-        request = self.modified_publish_datasource_request
+        request = self.modified_publish_datasource_request()
         parts = {'request_payload': (None, json.dumps(request), 'application/json')}
         return self._add_multipart(parts)
 
     def _publish_single_file_request(self):
-        request = self.modified_publish_datasource_request
+        request = self.modified_publish_datasource_request()
         datasource_file, datasource_bytes = self.get_datasource()
         parts = {'request_payload': (None, json.dumps(request), 'application/json'),
                  'tableau_datasource': (datasource_file, datasource_bytes, 'application/octet-stream')}

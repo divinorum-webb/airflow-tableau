@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateFlowConnectionRequest(BaseRequest):
@@ -33,7 +33,7 @@ class UpdateFlowConnectionRequest(BaseRequest):
         self._connection_password = connection_password
         self._embed_password_flag = embed_password_flag
         self._validate_inputs()
-        self.base_update_flow_connection_request
+        self.base_update_flow_connection_request()
 
     @property
     def optional_parameter_keys(self):
@@ -74,12 +74,10 @@ class UpdateFlowConnectionRequest(BaseRequest):
         else:
             self._connection_password = ''
 
-    @property
     def base_update_flow_connection_request(self):
         self._request_body.update({'connection': {}})
         return self._request_body
 
-    @property
     def modified_update_flow_connection_request(self):
         if any(self.optional_parameter_values_exist):
             self._request_body['connection'].update(
@@ -97,4 +95,4 @@ class UpdateFlowConnectionRequest(BaseRequest):
         return params_dict
 
     def get_request(self):
-        return self.modified_update_flow_connection_request
+        return self.modified_update_flow_connection_request()

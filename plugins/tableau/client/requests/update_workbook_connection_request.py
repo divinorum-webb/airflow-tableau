@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateWorkbookConnectionRequest(BaseRequest):
@@ -77,7 +77,6 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
         self._request_body.update({'connection': {}})
         return self._request_body
 
-    @property
     def modified_update_workbook_connection_request(self):
         if any(self.optional_parameter_values_exist):
             self._request_body['connection'].update(
@@ -95,4 +94,4 @@ class UpdateWorkbookConnectionRequest(BaseRequest):
         return params_dict
 
     def get_request(self):
-        return self.modified_update_workbook_connection_request
+        return self.modified_update_workbook_connection_request()

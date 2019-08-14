@@ -165,7 +165,6 @@ class PublishWorkbookRequest(BaseRequest):
         })
         return self._request_body
 
-    @property
     def modified_publish_workbook_request(self):
         self._request_body['workbook'].update(self._get_parameters_dict(self.optional_workbook_param_keys,
                                                                         self.optional_workbook_param_values))
@@ -259,12 +258,12 @@ class PublishWorkbookRequest(BaseRequest):
         return request, content_type
 
     def _publish_chunked_file_request(self):
-        request = self.modified_publish_workbook_request
+        request = self.modified_publish_workbook_request()
         parts = {'request_payload': (None, json.dumps(request), 'application/json')}
         return self._add_multipart(parts)
 
     def _publish_single_file_request(self):
-        request = self.modified_publish_workbook_request
+        request = self.modified_publish_workbook_request()
         workbook_file, workbook_bytes = self.get_workbook()
         parts = {'request_payload': (None, json.dumps(request), 'application/json'),
                  'tableau_workbook': (workbook_file, workbook_bytes, 'application/octet-stream')}

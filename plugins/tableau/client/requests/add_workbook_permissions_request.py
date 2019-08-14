@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddWorkbookPermissionsRequest(BaseRequest):
@@ -35,7 +35,7 @@ class AddWorkbookPermissionsRequest(BaseRequest):
         self._user_capability_names, self._user_capability_modes = None, None
         self._group_capability_names, self._group_capability_modes = None, None
         self._validate_inputs()
-        self.base_add_permissions_request
+        self.base_add_permissions_request()
 
     @property
     def valid_capability_names(self):
@@ -110,12 +110,10 @@ class AddWorkbookPermissionsRequest(BaseRequest):
     def optional_workbook_param_values(self):
         return [self._workbook_id]
 
-    @property
     def base_add_permissions_request(self):
         self._request_body.update({'permissions': {'granteeCapabilities': []}})
         return self._request_body
 
-    @property
     def modified_add_permissions_request(self):
         if any(self.optional_workbook_param_values):
             self._request_body['permissions'].update({'workbook': {}})
@@ -143,4 +141,4 @@ class AddWorkbookPermissionsRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_add_permissions_request
+        return self.modified_add_permissions_request()

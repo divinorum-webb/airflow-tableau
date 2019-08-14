@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddUserToAlertRequest(BaseRequest):
@@ -16,10 +16,9 @@ class AddUserToAlertRequest(BaseRequest):
         super().__init__(ts_connection)
         self._user_id = user_id
 
-    @property
     def base_add_user_request(self):
         self._request_body.update({'user': {'id': self._user_id}})
         return self._request_body
 
     def get_request(self):
-        return self.base_add_user_request
+        return self.base_add_user_request()

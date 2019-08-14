@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class SignInRequest(BaseRequest):
@@ -24,9 +24,8 @@ class SignInRequest(BaseRequest):
         self._username = username
         self._password = password
         self._user_to_impersonate = user_to_impersonate
-        self.base_signin_request
+        self.base_signin_request()
 
-    @property
     def base_signin_request(self):
         self._request_body.update({
             "credentials": {
@@ -37,7 +36,6 @@ class SignInRequest(BaseRequest):
         })
         return self._request_body
 
-    @property
     def modified_signin_request(self):
         self._request_body.update({
             "user": {
@@ -50,6 +48,6 @@ class SignInRequest(BaseRequest):
         if self._username and self._password and not self._user_to_impersonate:
             return self._request_body
         elif self._username and self._password and self._user_to_impersonate:
-            return self.modified_signin_request
+            return self.modified_signin_request()
         else:
             self._invalid_parameter_exception()

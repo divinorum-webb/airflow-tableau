@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class CreateSiteRequest(BaseRequest):
@@ -69,7 +69,7 @@ class CreateSiteRequest(BaseRequest):
         self._revision_history_enabled_flag = revision_history_enabled_flag
         self._revision_limit = revision_limit
         self._subscribe_others_enabled_flag = subscribe_others_enabled_flag
-        self.base_create_site_request
+        self.base_create_site_request()
 
     @property
     def optional_param_keys(self):
@@ -99,7 +99,6 @@ class CreateSiteRequest(BaseRequest):
             'true' if self._subscribe_others_enabled_flag else None
         ]
 
-    @property
     def base_create_site_request(self):
         self._request_body.update({
             'site': {
@@ -110,7 +109,6 @@ class CreateSiteRequest(BaseRequest):
         })
         return self._request_body
 
-    @property
     def modified_create_site_request(self):
         if self._user_quota and self._admin_mode != 'ContentOnly':
             self._request_body['site'].update({'userQuota': str(self._user_quota)})
@@ -122,4 +120,4 @@ class CreateSiteRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.modified_create_site_request
+        return self.modified_create_site_request()

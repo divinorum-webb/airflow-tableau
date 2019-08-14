@@ -1,4 +1,4 @@
-from tableau.client.requests.base_request import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class AddProjectToFavoritesRequest(BaseRequest):
@@ -20,7 +20,6 @@ class AddProjectToFavoritesRequest(BaseRequest):
         self._favorite_label = favorite_label
         self._project_id = project_id
 
-    @property
     def base_add_favorites_request(self):
         self._request_body.update({
             'favorite': {
@@ -31,4 +30,4 @@ class AddProjectToFavoritesRequest(BaseRequest):
         return self._request_body
 
     def get_request(self):
-        return self.base_add_favorites_request
+        return self.base_add_favorites_request()
