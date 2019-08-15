@@ -1,3 +1,4 @@
+from .base_request import BaseRequest
 from .add_datasource_permissions_request import AddDatasourcePermissionsRequest
 from .add_datasource_to_favorites_request import AddDatasourceToFavoritesRequest
 from .add_datasource_to_schedule_request import AddDatasourceToScheduleRequest
@@ -15,7 +16,6 @@ from .add_view_to_favorites_request import AddViewToFavoritesRequest
 from .add_workbook_permissions_request import AddWorkbookPermissionsRequest
 from .add_workbook_to_favorites_request import AddWorkbookToFavoritesRequest
 from .add_workbook_to_schedule_request import AddWorkbookToScheduleRequest
-from .base_request import BaseRequest
 from .create_group_request import CreateGroupRequest
 from .create_project_request import CreateProjectRequest
 from .create_schedule_request import CreateScheduleRequest

@@ -1,5 +1,5 @@
-from .auth_endpoint import AuthEndpoint
 from .base_endpoint import BaseEndpoint
+from .auth_endpoint import AuthEndpoint
 from .data_alert_endpoint import DataAlertEndpoint
 from .datasource_endpoint import DatasourceEndpoint
 from .favorites_endpoint import FavoritesEndpoint
