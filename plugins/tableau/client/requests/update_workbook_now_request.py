@@ -1,4 +1,4 @@
-from tableau.client import BaseRequest
+from tableau.client.requests import BaseRequest
 
 
 class UpdateWorkbookNowRequest(BaseRequest):
