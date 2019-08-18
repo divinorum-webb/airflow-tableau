@@ -23,6 +23,7 @@ class AddUserToSiteRequest(BaseRequest):
         self._user_name = user_name
         self._site_role = site_role
         self._auth_setting = auth_setting
+        self._validate_site_role()
         self.base_add_user_request()
 
     @property
@@ -46,6 +47,25 @@ class AddUserToSiteRequest(BaseRequest):
     @property
     def optional_user_param_values(self):
         return [self._auth_setting]
+
+    @property
+    def valid_site_roles(self):
+        return [
+            'Creator',
+            'Explorer',
+            'ExplorerCanPublish',
+            'siteAdministratorExplorer'
+            'SiteAdministratorCreator',
+            'Unlicensed',
+            'Viewer',
+            'viewer'
+        ]
+
+    def _validate_site_role(self):
+        if self._site_role.lower() in self.valid_site_roles:
+            pass
+        else:
+            self._invalid_parameter_exception()
 
     def base_add_user_request(self):
         self._request_body.update({'user': {}})
