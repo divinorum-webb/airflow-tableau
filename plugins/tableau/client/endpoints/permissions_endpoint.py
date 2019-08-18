@@ -66,18 +66,68 @@ class PermissionsEndpoint(BaseEndpoint):
         self._add_object_permissions = add_object_permissions
         self._query_object_permissions = query_object_permissions
         self._delete_object_permissions = delete_object_permissions
-        self._object_type = object_type
+        self._object_type = self._enforce_plurals(object_type,
+                                                  self.valid_project_permissions_objects)
         self._object_id = object_id
         self._query_default_project_permissions = query_default_project_permissions
         self._add_default_project_permissions = add_default_project_permissions
         self._delete_default_project_permissions = delete_default_project_permissions
-        self._project_permissions_object = project_permissions_object
-        self._delete_permissions_object = delete_permissions_object
+        self._project_permissions_object = self._enforce_plurals(project_permissions_object,
+                                                                 self.valid_project_permissions_objects)
+        self._delete_permissions_object = self._enforce_plurals(delete_permissions_object,
+                                                                self.valid_project_delete_permissions_objects)
         self._delete_permissions_object_id = delete_permissions_object_id
         self._capability_name = capability_name
         self._capability_mode = capability_mode
         self._project_id = project_id
         self._parameter_dict = parameter_dict
+
+    @property
+    def valid_project_permissions_objects(self):
+        return [
+            'datasources',
+            'datasource',
+            'workbooks',
+            'workbook',
+            'flows',
+            'flow',
+            'views',
+            'view',
+            'projects',
+            'project'
+        ]
+
+    @property
+    def valid_project_delete_permissions_objects(self):
+        return [
+            'users',
+            'user',
+            'groups',
+            'group'
+        ]
+
+    # def _validate_project_permissions_object(self):
+    #     if self._project_permissions_object:
+    #         if self._project_permissions_object in self.valid_project_permissions_objects:
+    #             if self._project_permissions_object[-1] == 's':
+    #                 pass
+    #             else:
+    #                 self._project_permissions_object += 's'
+    #         else:
+    #             self._invalid_parameter_exception()
+
+    def _enforce_plurals(self, permissions_object, valid_permissions_objects):
+        print('permissions_object: ', permissions_object)
+        print('valid_permissions_objects: ', valid_permissions_objects)
+        if permissions_object:
+            if permissions_object in valid_permissions_objects:
+                if permissions_object[-1] == 's':
+                    return permissions_object
+                else:
+                    return permissions_object + 's'
+            else:
+                self._invalid_parameter_exception()
+
 
     @property
     def base_permissions_url(self):
@@ -87,27 +137,27 @@ class PermissionsEndpoint(BaseEndpoint):
 
     @property
     def base_object_permissions_url(self):
-        return "{0}/{1}s/{2}/permissions".format(self.base_permissions_url,
-                                                 self._object_type,
-                                                 self._object_id)
+        return "{0}/{1}/{2}/permissions".format(self.base_permissions_url,
+                                                self._object_type,
+                                                self._object_id)
 
     @property
     def base_query_default_permissions_url(self):
-        return "{0}/projects/{1}/default-permissions/{2}s".format(self.base_permissions_url,
-                                                                  self._project_id,
-                                                                  self._project_permissions_object)
+        return "{0}/projects/{1}/default-permissions/{2}".format(self.base_permissions_url,
+                                                                 self._project_id,
+                                                                 self._project_permissions_object)
 
     @property
     def base_delete_permission_url(self):
-        return "{0}/{1}s/{2}/{3}/{4}".format(self.base_object_permissions_url,
-                                             self._delete_permissions_object,
-                                             self._delete_permissions_object_id,
-                                             self._capability_name,
-                                             self._capability_mode)
+        return "{0}/{1}/{2}/{3}/{4}".format(self.base_object_permissions_url,
+                                            self._delete_permissions_object,
+                                            self._delete_permissions_object_id,
+                                            self._capability_name,
+                                            self._capability_mode)
 
     @property
     def base_delete_default_permissions_url(self):
-        return "{0}/{1}s/{2}/{3}/{4}".format(self.base_query_default_permissions_url,
+        return "{0}/{1}/{2}/{3}/{4}".format(self.base_query_default_permissions_url,
                                              self._delete_permissions_object,
                                              self._delete_permissions_object_id,
                                              self._capability_name,

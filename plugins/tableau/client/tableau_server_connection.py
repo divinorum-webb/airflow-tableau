@@ -940,8 +940,10 @@ class TableauServerConnection:
 
     def delete_data_source_permission(self, datasource_id, delete_permissions_object, delete_permissions_object_id,
                                       capability_name, capability_mode):
-        self.active_endpoint = PermissionsEndpoint(ts_connection=self, object_type='datasource',
-                                                   object_id=datasource_id, delete_object_permissions=True,
+        self.active_endpoint = PermissionsEndpoint(ts_connection=self,
+                                                   object_type='datasource',
+                                                   object_id=datasource_id,
+                                                   delete_object_permissions=True,
                                                    delete_permissions_object=delete_permissions_object,
                                                    delete_permissions_object_id=delete_permissions_object_id,
                                                    capability_name=capability_name,
@@ -974,9 +976,12 @@ class TableauServerConnection:
         response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
         return response
 
-    def delete_default_permission(self, project_id, project_permissions_object, delete_permissions_object,
+    def delete_default_permission(self, project_id,
+                                  project_permissions_object,
+                                  delete_permissions_object,
                                   delete_permissions_object_id,
-                                  capability_name, capability_mode):
+                                  capability_name,
+                                  capability_mode):
         self.active_endpoint = PermissionsEndpoint(ts_connection=self,
                                                    project_id=project_id,
                                                    project_permissions_object=project_permissions_object,
@@ -986,12 +991,21 @@ class TableauServerConnection:
                                                    capability_name=capability_name,
                                                    capability_mode=capability_mode).get_endpoint()
         self.active_headers = self.default_headers
+        print('endpoint: ', self.active_endpoint)
+        print('request: ', self.active_request)
+        print('headers: ', self.active_headers)
         response = requests.delete(url=self.active_endpoint, headers=self.active_headers)
         return response
 
-    def delete_view_permission(self, view_id, delete_permissions_object, delete_permissions_object_id,
-                               capability_name, capability_mode):
-        self.active_endpoint = PermissionsEndpoint(ts_connection=self, object_type='view', object_id=view_id,
+    def delete_view_permission(self,
+                               view_id,
+                               delete_permissions_object,
+                               delete_permissions_object_id,
+                               capability_name,
+                               capability_mode):
+        self.active_endpoint = PermissionsEndpoint(ts_connection=self,
+                                                   object_type='view',
+                                                   object_id=view_id,
                                                    delete_object_permissions=True,
                                                    delete_permissions_object=delete_permissions_object,
                                                    delete_permissions_object_id=delete_permissions_object_id,
@@ -1003,7 +1017,9 @@ class TableauServerConnection:
 
     def delete_workbook_permission(self, workbook_id, delete_permissions_object, delete_permissions_object_id,
                                    capability_name, capability_mode):
-        self.active_endpoint = PermissionsEndpoint(ts_connection=self, object_type='workbook', object_id=workbook_id,
+        self.active_endpoint = PermissionsEndpoint(ts_connection=self,
+                                                   object_type='workbook',
+                                                   object_id=workbook_id,
                                                    delete_object_permissions=True,
                                                    delete_permissions_object=delete_permissions_object,
                                                    delete_permissions_object_id=delete_permissions_object_id,
