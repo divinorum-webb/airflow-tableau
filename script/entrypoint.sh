@@ -32,11 +32,11 @@ then
 fi
 
 # Install custom python package if requirements.txt is present
-if [ -e "/requirements.txt" ]; then
-    $(which pip) install --user -r /requirements.txt
+if [[ -e "/requirements.txt" ]]; then
+    $(which pip) install -r /requirements.txt
 fi
 
-if [ -n "$REDIS_PASSWORD" ]; then
+if [[ -n "$REDIS_PASSWORD" ]]; then
     REDIS_PREFIX=:${REDIS_PASSWORD}@
 else
     REDIS_PREFIX=
@@ -47,7 +47,7 @@ wait_for_port() {
   local j=0
   while ! nc -z "$host" "$port" >/dev/null 2>&1 < /dev/null; do
     j=$((j+1))
-    if [ $j -ge $TRY_LOOP ]; then
+    if [[ $j -ge $TRY_LOOP ]]; then
       echo >&2 "$(date) - $host:$port still not reachable, giving up"
       exit 1
     fi
@@ -56,13 +56,13 @@ wait_for_port() {
   done
 }
 
-if [ "$AIRFLOW__CORE__EXECUTOR" != "SequentialExecutor" ]; then
+if [[ "$AIRFLOW__CORE__EXECUTOR" != "SequentialExecutor" ]]; then
   AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
   AIRFLOW__CELERY__RESULT_BACKEND="db+postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
   wait_for_port "Postgres" "$POSTGRES_HOST" "$POSTGRES_PORT"
 fi
 
-if [ "$AIRFLOW__CORE__EXECUTOR" = "CeleryExecutor" ]; then
+if [[ "$AIRFLOW__CORE__EXECUTOR" = "CeleryExecutor" ]]; then
   AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
   wait_for_port "Redis" "$REDIS_HOST" "$REDIS_PORT"
 fi
@@ -70,7 +70,7 @@ fi
 case "$1" in
   webserver)
     airflow initdb
-    if [ "$AIRFLOW__CORE__EXECUTOR" = "LocalExecutor" ]; then
+    if [[ "$AIRFLOW__CORE__EXECUTOR" = "LocalExecutor" ]]; then
       # With the "Local" executor it should all run in one container.
       airflow scheduler &
     fi
