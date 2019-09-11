@@ -27,3 +27,6 @@ __pycache__
 
 # actual airflow.cfg file - uncomment if it has sensitive info
 # config/airflow.cfg
+
+# tableau config.py file - use the config_example.py file as a template
+*config.py

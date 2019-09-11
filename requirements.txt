@@ -1,5 +1,3 @@
-pandas
-numpy
 requests
 urllib3
-functools
+tableau-api-lib

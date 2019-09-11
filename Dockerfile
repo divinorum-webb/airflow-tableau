@@ -1,5 +1,5 @@
 # VERSION 1.10.3
-# AUTHOR: Elliott "divinorum_webb" Stam
+# AUTHOR: Elliott Stam
 # ORIGINAL AUTHOR: Matthieu "Puckel_" Roisil
 # DESCRIPTION: Basic Airflow container with Tableau plugin
 # BUILD: docker build --rm -t divinorum-webb/docker-airflow .
@@ -80,8 +80,11 @@ RUN set -ex \
 
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
+COPY requirements.txt /requirements.txt
+COPY requirements.txt ${AIRFLOW_USER_HOME}/requirements.txt
 
 RUN pip install Flask==1.0.3
+RUN pip install -r /requirements.txt
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
 EXPOSE 8080 5555 8793
